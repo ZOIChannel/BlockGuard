@@ -1,0 +1,4 @@
+name: BlockGuard
+version: @version@
+main: jp.hack.minecraft.blockguard.Main
+api-version: 1.16
