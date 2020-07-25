@@ -2,3 +2,14 @@ name: BlockGuard
 version: @version@
 main: jp.hack.minecraft.blockguard.Main
 api-version: 1.16
+commands:
+  blockguard:
+    description: main command
+    aliases: bg
+    usage: "Usage: /<command>"
+    permission: blockguard.admin
+    permission-message: You dont't have <permission>
+permissions:
+  blockguard.admin:
+    description: game master permission
+    default: op
