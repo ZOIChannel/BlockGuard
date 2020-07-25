@@ -12,16 +12,22 @@ repositories {
     mavenCentral()
     maven {
         name = 'spigotmc-repo'
-        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
     }
     maven {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
+    maven {
+        name = 'sk89q'
+        url = 'https://maven.enginehub.org/repo/'
+    }
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT'
+    compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.2.0-SNAPSHOT'
 }
 
 processResources {
