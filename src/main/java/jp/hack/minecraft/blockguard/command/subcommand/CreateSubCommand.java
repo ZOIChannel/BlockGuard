@@ -30,6 +30,11 @@ public class CreateSubCommand implements SubCommand {
         for (int i = 0; i < args.length; i++) {
             plugin.getLogger().info("args[" + i + "] = " + args[i]);
         }
+
+        sender.sendMessage("createコマンドが実行されました");
+        for (int i = 0; i < args.length; i++) {
+            sender.sendMessage("args[" + i + "] = " + args[i]);
+        }
         return true;
     }
 
