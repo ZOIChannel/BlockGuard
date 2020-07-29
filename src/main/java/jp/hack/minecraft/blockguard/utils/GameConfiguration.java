@@ -1,6 +1,6 @@
 package jp.hack.minecraft.blockguard.utils;
 
-import jp.hack.minecraft.mineandfight.core.GamePlugin;
+import jp.hack.minecraft.blockguard.core.utils.GamePlugin;
 import jp.hack.minecraft.blockguard.core.utils.Configuration;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
