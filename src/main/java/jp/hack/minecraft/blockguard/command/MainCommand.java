@@ -1,6 +1,7 @@
 package jp.hack.minecraft.blockguard.command;
 
 import jp.hack.minecraft.blockguard.command.subcommand.CreateSubCommand;
+import jp.hack.minecraft.blockguard.command.subcommand.TestSubCommand;
 import jp.hack.minecraft.blockguard.core.utils.GameCommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -8,6 +9,7 @@ public class MainCommand extends GameCommandExecutor {
     public MainCommand (JavaPlugin plugin){
         super(plugin);
 
+        addSubCommand(new TestSubCommand(plugin));
         addSubCommand(new CreateSubCommand(plugin));
     }
 

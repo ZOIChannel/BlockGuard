@@ -5,32 +5,42 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CreateSubCommand implements SubCommand {
+public class TestSubCommand implements SubCommand {
     JavaPlugin plugin;
 
-    public CreateSubCommand(JavaPlugin plugin){
+    public TestSubCommand(JavaPlugin plugin){
         this.plugin = plugin;
     }
 
     @Override
     public String getName() {
-        return "create";
+        return "test";
     }
 
     @Override
     public String getPermission() {
-        return null ;
+        return null;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        return false;
+        plugin.getLogger().info("testコマンドが実行されました");
+        for (int i = 0; i < args.length; i++) {
+            plugin.getLogger().info("args[" + i + "] = " + args[i]);
+        }
+
+        sender.sendMessage("testコマンドが実行されました");
+        for (int i = 0; i < args.length; i++) {
+            sender.sendMessage("args[" + i + "] = " + args[i]);
+        }
+        return true;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return null;
+        return new ArrayList<>();
     }
 }
