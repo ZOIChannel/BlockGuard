@@ -1,15 +1,16 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
+import jp.hack.minecraft.blockguard.core.utils.SubCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-public class CreateSubCommand implements SubCommand {
+public class PowerSubCommand implements SubCommand {
     JavaPlugin plugin;
 
-    public CreateSubCommand(JavaPlugin plugin){
+    public PowerSubCommand(JavaPlugin plugin){
         this.plugin = plugin;
     }
 
@@ -25,8 +26,8 @@ public class CreateSubCommand implements SubCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        sender.sendMessage("Createコマンドが実行されました。");
-        sender.sendMessage("エリア名は"+args[1]+"です");
+        sender.sendMessage("Powerコマンドが実行されました。");
+        sender.sendMessage("エリア名は"+args[1]+"、値は"+args[2]+"です");
         return false;
     }
 
