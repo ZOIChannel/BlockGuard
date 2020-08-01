@@ -1,4 +1,4 @@
-package jp.hack.minecraft.blockguard.core.utils;
+package jp.hack.minecraft.blockguard.command.subcommand;
 
 import org.bukkit.command.TabExecutor;
 

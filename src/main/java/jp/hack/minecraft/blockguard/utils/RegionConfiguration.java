@@ -1,6 +1,6 @@
 package jp.hack.minecraft.blockguard.utils;
 
-import jp.hack.minecraft.mineandfight.core.GamePlugin;
+import jp.hack.minecraft.blockguard.core.RegionPlugin;
 import jp.hack.minecraft.blockguard.core.utils.Configuration;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -9,19 +9,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameConfiguration extends Configuration{
+public class RegionConfiguration extends Configuration{
 
-    public GameConfiguration(File configFile) {
+    public RegionConfiguration(File configFile) {
         super(configFile);
     }
 
-    public static GameConfiguration create(GamePlugin plugin, String gameId){
+    public static RegionConfiguration create(RegionPlugin plugin, String gameId){
         File gameFolder = new File(plugin.getDataFolder(), gameId);
         if(!gameFolder.exists()){
             gameFolder.mkdirs();
         }
 
-        GameConfiguration configuration = new GameConfiguration(new File(gameFolder, "config.yml"));
+        RegionConfiguration configuration = new RegionConfiguration(new File(gameFolder, "config.yml"));
         configuration.load();
 
         plugin.getConfiguration().addGame(gameId);

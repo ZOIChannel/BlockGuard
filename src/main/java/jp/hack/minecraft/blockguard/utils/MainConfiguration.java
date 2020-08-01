@@ -1,13 +1,6 @@
 package jp.hack.minecraft.blockguard.utils;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import jp.hack.minecraft.blockguard.core.utils.Configuration;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.Wool;
 
 import java.io.File;
 import java.util.List;
@@ -23,26 +16,26 @@ public class MainConfiguration extends Configuration {
 
     public List<String> getGameList() {
         synchronized (this) {
-            return getStringList("games");
+            return getStringList("regions");
         }
     }
 
     public void addGame(String gameId){
         synchronized (this) {
-            List<String> list = getStringList("games");
+            List<String> list = getStringList("regions");
             if(list.contains(gameId)!=true){
                 list.add(gameId);
-                setProperty("games", list);
+                setProperty("regions", list);
             }
         }
     }
 
     public void deleteGame(String gameId){
         synchronized (this) {
-            List<String> list = getStringList("games");
+            List<String> list = getStringList("regions");
             if(list.contains(gameId)==true){
                 list.remove(gameId);
-                setProperty("games", list);
+                setProperty("regions", list);
             }
         }
     }
