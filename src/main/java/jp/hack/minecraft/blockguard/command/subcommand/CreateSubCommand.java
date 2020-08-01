@@ -25,11 +25,7 @@ public class CreateSubCommand implements SubCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        plugin.getLogger().info("createコマンドが実行されました");
-        for (int i = 0; i < args.length; i++) {
-            plugin.getLogger().info("args[" + i + "] = " + args[i]);
-        }
-        return true;
+        return false;
     }
 
     @Override

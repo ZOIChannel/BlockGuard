@@ -1,6 +1,10 @@
 package jp.hack.minecraft.blockguard.utils;
 
+<<<<<<< HEAD:src/main/java/jp/hack/minecraft/blockguard/utils/RegionConfiguration.java
 import jp.hack.minecraft.blockguard.core.RegionPlugin;
+=======
+import jp.hack.minecraft.blockguard.core.utils.GamePlugin;
+>>>>>>> 7c339e29a07897f54146c8472f390c856bdf79dc:src/main/java/jp/hack/minecraft/blockguard/utils/GameConfiguration.java
 import jp.hack.minecraft.blockguard.core.utils.Configuration;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
