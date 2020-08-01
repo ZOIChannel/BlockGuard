@@ -1,59 +1,41 @@
 package jp.hack.minecraft.blockguard.core;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.entity.Player;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.Vector;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 
 public class Region implements ConfigurationSerializable {
     private String id;
-    private boolean isWorking = true;
-    private Map<String, String> Flags = new ConcurrentHashMap<>();
-    private Map<UUID, Player> members = new ConcurrentHashMap<>();
-    private Map<UUID, Player> operators = new ConcurrentHashMap<>();
+    private boolean isWorking;
+    private List<UUID> members = new ArrayList<>();
+    private List<UUID> operators = new ArrayList<>();
     private Vector min = new Vector();
     private Vector max = new Vector();
 
-    public Region(String id){
+    public Region(String id, Vector min, Vector max){
         this.id = id;
         this.isWorking = true;
+        this.min = min;
+        this.max = max;
     }
 
-    public void setFlag(String flagName, String flagContent){
-        Flags.getOrDefault(flagName,flagContent);
-    }
-    public String getFlag(String flagName){
-        return Flags.get(flagName);
-    }
-
-    public void addPlayer(Player player){
-        members.put(player.getUniqueId(),player);
+    public void addPlayer(UUID uuid){
+        members.add(uuid);
     }
     public void removePlayer(UUID uuid){
         members.remove(uuid);
     }
     public void isTherePlayer(UUID uuid){
-        members.containsKey(uuid);
-    }
-    public Player findPlayer(UUID uuid){
-        return members.get(uuid);
+        members.contains(uuid);
     }
 
-    public void addOperator(Player player){
-        operators.put(player.getUniqueId(),player);
+    public void addOperator(UUID uuid){
+        operators.add(uuid);
     }
     public void removeOperator(UUID uuid){
         operators.remove(uuid);
     }
     public void isThereOperator(UUID uuid){
-        operators.containsKey(uuid);
-    }
-    public Player findOperator(UUID uuid){
-        return operators.get(uuid);
+        operators.contains(uuid);
     }
 
     @Override
@@ -63,6 +45,8 @@ public class Region implements ConfigurationSerializable {
         result.put("isWorking", isWorking);
         result.put("members", members);
         result.put("operetors", operators);
+        result.put("minPos", min);
+        result.put("maxPos", max);
         return result;
     }
 }
