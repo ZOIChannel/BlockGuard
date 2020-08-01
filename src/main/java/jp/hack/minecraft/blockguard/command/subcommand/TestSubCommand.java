@@ -1,8 +1,10 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
-import jp.hack.minecraft.blockguard.core.utils.SubCommand;
+import com.sk89q.worldedit.IncompleteRegionException;
+import jp.hack.minecraft.blockguard.core.utils.WorldEditorUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -36,6 +38,14 @@ public class TestSubCommand implements SubCommand {
         for (int i = 0; i < args.length; i++) {
             sender.sendMessage("args[" + i + "] = " + args[i]);
         }
+
+        WorldEditorUtil weUtil = new WorldEditorUtil();
+        try {
+            weUtil.getRegion((Player) sender);
+        } catch (IncompleteRegionException e) {
+            e.printStackTrace();
+        }
+
         return true;
     }
 
