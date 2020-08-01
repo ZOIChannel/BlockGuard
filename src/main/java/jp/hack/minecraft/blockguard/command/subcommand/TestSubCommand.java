@@ -1,11 +1,14 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
 import com.sk89q.worldedit.IncompleteRegionException;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.regions.Region;
 import jp.hack.minecraft.blockguard.core.utils.WorldEditorUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +43,16 @@ public class TestSubCommand implements SubCommand {
         }
 
         WorldEditorUtil weUtil = new WorldEditorUtil();
+
+
         try {
-            weUtil.getRegion((Player) sender);
+            Region region = weUtil.getRegion((Player) sender);
+            BlockVector3 minVec = region.getMinimumPoint();
+            BlockVector3 maxVec = region.getMaximumPoint();
+
+            sender.sendMessage("min:("+minVec.getBlockX()+", "+minVec.getBlockY()+", "+minVec.getBlockZ()+")");
+            sender.sendMessage("max:("+maxVec.getBlockX()+", "+maxVec.getBlockY()+", "+maxVec.getBlockZ()+")");
+
         } catch (IncompleteRegionException e) {
             e.printStackTrace();
         }
