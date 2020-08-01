@@ -25,12 +25,8 @@ public class CreateSubCommand implements SubCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-<<<<<<< HEAD
-
-=======
         sender.sendMessage("Createコマンドが実行されました。");
         sender.sendMessage("エリア名は"+args[1]+"です");
->>>>>>> 0e911d4e5a8cc97187e7a9a958dd5fe43200e247
         return false;
     }
 

@@ -3,12 +3,8 @@ package jp.hack.minecraft.blockguard.utils;
 import jp.hack.minecraft.blockguard.core.Region;
 import jp.hack.minecraft.blockguard.core.RegionPlugin;
 import jp.hack.minecraft.blockguard.core.utils.Configuration;
-import org.bukkit.Location;
-import org.bukkit.util.Vector;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RegionConfiguration extends Configuration {
 
