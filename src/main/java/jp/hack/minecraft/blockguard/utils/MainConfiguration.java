@@ -14,27 +14,27 @@ public class MainConfiguration extends Configuration {
     }
 
 
-    public List<String> getGameList() {
+    public List<String> getRegionList() {
         synchronized (this) {
             return getStringList("regions");
         }
     }
 
-    public void addGame(String gameId){
+    public void addRegion(String id){
         synchronized (this) {
             List<String> list = getStringList("regions");
-            if(list.contains(gameId)!=true){
-                list.add(gameId);
+            if(list.contains(id)!=true){
+                list.add(id);
                 setProperty("regions", list);
             }
         }
     }
 
-    public void deleteGame(String gameId){
+    public void deleteRegion(String id){
         synchronized (this) {
             List<String> list = getStringList("regions");
-            if(list.contains(gameId)==true){
-                list.remove(gameId);
+            if(list.contains(id)==true){
+                list.remove(id);
                 setProperty("regions", list);
             }
         }
