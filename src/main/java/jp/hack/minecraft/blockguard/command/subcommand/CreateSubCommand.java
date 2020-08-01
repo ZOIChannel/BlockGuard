@@ -25,6 +25,7 @@ public class CreateSubCommand implements SubCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         return false;
     }
 
