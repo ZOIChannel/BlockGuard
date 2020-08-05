@@ -2,6 +2,7 @@ package jp.hack.minecraft.blockguard.core;
 
 import org.bukkit.World;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.util.Vector;
 
 import java.rmi.NoSuchObjectException;
 import java.util.*;
@@ -11,14 +12,18 @@ public class Region implements ConfigurationSerializable {
     private boolean isWorking;
     private List<UUID> members = new ArrayList<>();
     private List<UUID> operators = new ArrayList<>();
-    private Vector minPos;
-    private Vector maxPos;
+    private Vectors vectors;
 
-    Region(String id, Vector minPos, Vector maxPos){
+    public Region(String id, Vector minPos, Vector maxPos){
         this.id = id;
         this.isWorking = true;
-        this.minPos = minPos;
-        this.maxPos = maxPos;
+        this.vectors = new Vectors(minPos, maxPos);
+    }
+
+    public Region(String id, Vectors vectors) {
+        this.id = id;
+        this.isWorking = true;
+        this.vectors = vectors;
     }
 
 
@@ -55,19 +60,19 @@ public class Region implements ConfigurationSerializable {
     }
 
     public Vector getMinPos() {
-        return minPos;
+        return vectors.getMin();
     }
 
     public void setMinPos(Vector minPos) {
-        this.minPos = minPos;
+        this.vectors.setMin(minPos);
     }
 
     public Vector getMaxPos() {
-        return maxPos;
+        return vectors.getMin();
     }
 
     public void setMaxPos(Vector maxPos) {
-        this.maxPos = maxPos;
+        this.vectors.setMax(maxPos);
     }
 
     public void addPlayer(UUID uuid){
@@ -99,23 +104,24 @@ public class Region implements ConfigurationSerializable {
     public Map<String, Object> serialize() {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("id", id);
+        result.put("vectors", vectors);
         result.put("isWorking", isWorking);
         result.put("members", members);
         result.put("operators", operators);
-        result.put("minPos", minPos);
-        result.put("maxPos", maxPos);
         return result;
     }
 
     public static Region deserialize(Map<String, Object> args) throws NoSuchObjectException {
         Region region;
 
-        if (args.containsKey("id") && args.containsKey("minPos") && args.containsKey("maxPos")) {
-            region = new Region((String) args.get("id"), (Vector) args.get("minPos"), (Vector) args.get("maxPos"));
+        if (args.containsKey("id") && args.containsKey("vectors")) {
+            region = new Region((String) args.get("id"), (Vectors) args.get("vectors"));
         } else {
-            throw new NoSuchObjectException("There is not \"id\" or \"minPos\" or \"maxPos\".");
+            throw new NoSuchObjectException("There is not \"id\" or \"vectors\".");
         }
-
+        region.setWorking((Boolean) args.get("isWoking"));
+        region.setMembers((List<UUID>) args.get("members"));
+        region.setOperators((List<UUID>) args.get("operators"));
         return region;
     }
 }
