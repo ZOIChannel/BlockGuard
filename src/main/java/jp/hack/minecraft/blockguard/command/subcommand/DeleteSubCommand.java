@@ -1,5 +1,6 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
+import jp.hack.minecraft.blockguard.core.SubCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -38,7 +38,7 @@ public class RegionManager implements Listener {
     }
 
 
-    public Region getRegion(String id){
+    public Region findRegion(String id){
         return regions.get(id);
     }
 
