@@ -3,10 +3,10 @@ package jp.hack.minecraft.blockguard.command;
 import jp.hack.minecraft.blockguard.command.subcommand.CreateSubCommand;
 import jp.hack.minecraft.blockguard.core.CommandExecutor;
 import jp.hack.minecraft.blockguard.command.subcommand.TestSubCommand;
-import org.bukkit.plugin.java.JavaPlugin;
+import jp.hack.minecraft.blockguard.core.RegionPlugin;
 
 public class MainCommand extends CommandExecutor {
-    public MainCommand (JavaPlugin plugin){
+    public MainCommand (RegionPlugin plugin){
         super(plugin);
 
         addSubCommand(new TestSubCommand(plugin));
