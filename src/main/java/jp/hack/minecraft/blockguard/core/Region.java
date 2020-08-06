@@ -1,7 +1,10 @@
 package jp.hack.minecraft.blockguard.core;
 
+import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
@@ -9,25 +12,26 @@ import java.rmi.NoSuchObjectException;
 import java.util.*;
 
 public class Region implements ConfigurationSerializable {
+    private static RegionPlugin plugin;
     private String id;
     private boolean isWorking;
     private List<UUID> members = new ArrayList<>();
     private List<UUID> operators = new ArrayList<>();
     private Vectors vectors;
     private BoundingBox regionArea;
+    private RegionConfiguration configuration;
 
-    public Region(String id, Vector minPos, Vector maxPos){
-        this.id = id;
-        this.isWorking = true;
-        this.vectors = new Vectors(minPos, maxPos);
-    }
-
-    public Region(String id, Vectors vectors) {
+    public Region(RegionPlugin plugin, String id, Vectors vectors) {
+        this.plugin = plugin;
         this.id = id;
         this.isWorking = true;
         this.vectors = vectors;
+        this.configuration = RegionConfiguration.create(plugin, id);
     }
 
+    public RegionPlugin getPlugin() {
+        return plugin;
+    }
 
     public String getId() {
         return id;
@@ -101,9 +105,18 @@ public class Region implements ConfigurationSerializable {
         operators.contains(uuid);
     }
 
+    public RegionConfiguration getConfiguration() {
+        return configuration;
+    }
+
     public void onBlockBreakEvent(BlockBreakEvent e) {}
 
     public BoundingBox getRegionArea() {
+        if(regionArea == null) {
+            Vector min = vectors.getMin();
+            Vector max = vectors.getMax();
+            regionArea = new BoundingBox(min.getX(), min.getY(), min.getZ(), max.getX(), max.getY(), max.getZ());
+        }
         return regionArea;
     }
 
@@ -122,7 +135,7 @@ public class Region implements ConfigurationSerializable {
         Region region;
 
         if (args.containsKey("id") && args.containsKey("vectors")) {
-            region = new Region((String) args.get("id"), (Vectors) args.get("vectors"));
+            region = new Region(plugin, (String) args.get("id"), (Vectors) args.get("vectors"));
         } else {
             throw new NoSuchObjectException("There is not \"id\" or \"vectors\".");
         }

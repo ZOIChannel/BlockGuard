@@ -1,9 +1,9 @@
 package jp.hack.minecraft.blockguard;
 
 import jp.hack.minecraft.blockguard.command.MainCommand;
-import org.bukkit.plugin.java.JavaPlugin;
+import jp.hack.minecraft.blockguard.core.RegionPlugin;
 
-public final class Main extends JavaPlugin {
+public final class Main extends RegionPlugin {
 
     @Override
     public void onEnable() {

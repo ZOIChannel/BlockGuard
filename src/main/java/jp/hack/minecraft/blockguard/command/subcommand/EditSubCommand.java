@@ -1,16 +1,16 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
+import jp.hack.minecraft.blockguard.core.RegionPlugin;
 import jp.hack.minecraft.blockguard.core.SubCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
 public class EditSubCommand implements SubCommand {
-    JavaPlugin plugin;
+    RegionPlugin plugin;
 
-    public EditSubCommand(JavaPlugin plugin){
+    public EditSubCommand(RegionPlugin plugin){
         this.plugin = plugin;
     }
 

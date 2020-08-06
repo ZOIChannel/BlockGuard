@@ -1,5 +1,6 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
+import jp.hack.minecraft.blockguard.core.RegionPlugin;
 import jp.hack.minecraft.blockguard.core.SubCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -8,9 +9,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.List;
 
 public class DeleteSubCommand implements SubCommand {
-    JavaPlugin plugin;
+    RegionPlugin plugin;
 
-    public DeleteSubCommand(JavaPlugin plugin){
+    public DeleteSubCommand(RegionPlugin plugin){
         this.plugin = plugin;
     }
 

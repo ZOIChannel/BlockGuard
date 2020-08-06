@@ -1,5 +1,7 @@
 package jp.hack.minecraft.blockguard.core;
 
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.util.Vector;
 
@@ -25,7 +27,6 @@ public class Vectors implements ConfigurationSerializable {
     public void setMin(Vector min) {
         this.min = min;
     }
-
 
     public Vectors(Vector min, Vector max) {
         this.min = min;

@@ -1,9 +1,11 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
 import jp.hack.minecraft.blockguard.core.Region;
+import jp.hack.minecraft.blockguard.core.RegionPlugin;
 import jp.hack.minecraft.blockguard.core.SubCommand;
 import jp.hack.minecraft.blockguard.core.Vectors;
 import jp.hack.minecraft.blockguard.core.utils.WorldEditorUtil;
+import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -13,9 +15,9 @@ import org.bukkit.util.Vector;
 import java.util.List;
 
 public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
-    JavaPlugin plugin;
+    RegionPlugin plugin;
 
-    public CreateSubCommand(JavaPlugin plugin){
+    public CreateSubCommand(RegionPlugin plugin){
         this.plugin = plugin;
     }
 
@@ -45,11 +47,12 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
             return false;
         }
 
-        Vector min = vectors.getMin();
-        Vector max = vectors.getMax();
-        Region region = new Region(areaId, min, max);
+        Region region = new Region(plugin, areaId, vectors);
 
+        RegionConfiguration configuration = region.getConfiguration();
 
+        configuration.setRegion(region);
+        configuration.save();
 
         return true;
     }

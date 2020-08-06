@@ -1,5 +1,6 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
+import jp.hack.minecraft.blockguard.core.RegionPlugin;
 import jp.hack.minecraft.blockguard.core.SubCommand;
 import jp.hack.minecraft.blockguard.core.Vectors;
 import jp.hack.minecraft.blockguard.core.utils.WorldEditorUtil;
@@ -13,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestSubCommand implements SubCommand {
-    JavaPlugin plugin;
+    RegionPlugin plugin;
 
-    public TestSubCommand(JavaPlugin plugin){
+    public TestSubCommand(RegionPlugin plugin){
         this.plugin = plugin;
     }
 
