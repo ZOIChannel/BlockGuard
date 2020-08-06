@@ -17,13 +17,7 @@ public class BlockGuardLogic extends Region implements Listener {
 
     public void BlockBreakEvent(BlockBreakEvent e) {
         if(isWorking()) {
-            Player player = e.getPlayer();
-            Location blockLoc = e.getBlock().getLocation();
-
-            Vector pVec = new Vector(blockLoc.getBlockX(), blockLoc.getBlockY(), blockLoc.getBlockZ());
-            if (pVec.isInAABB(vectors.getMin(), vectors.getMax())) {
-                e.setCancelled(true);
-            }
+            e.setCancelled(true);
         }
     }
 }

@@ -1,7 +1,8 @@
 package jp.hack.minecraft.blockguard.core;
 
-import org.bukkit.World;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import java.rmi.NoSuchObjectException;
@@ -13,6 +14,7 @@ public class Region implements ConfigurationSerializable {
     private List<UUID> members = new ArrayList<>();
     private List<UUID> operators = new ArrayList<>();
     private Vectors vectors;
+    private BoundingBox regionArea;
 
     public Region(String id, Vector minPos, Vector maxPos){
         this.id = id;
@@ -99,6 +101,11 @@ public class Region implements ConfigurationSerializable {
         operators.contains(uuid);
     }
 
+    public void onBlockBreakEvent(BlockBreakEvent e) {}
+
+    public BoundingBox getRegionArea() {
+        return regionArea;
+    }
 
     @Override
     public Map<String, Object> serialize() {
