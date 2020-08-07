@@ -13,6 +13,8 @@ public abstract class RegionPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        getServer().getPluginManager().registerEvents(RegionManager.getInstance(), this);
+
         if (getDataFolder().exists() != true) {
             getDataFolder().mkdirs();
         }

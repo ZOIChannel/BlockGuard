@@ -21,11 +21,10 @@ public class Region implements ConfigurationSerializable {
     private BoundingBox regionArea;
     private RegionConfiguration configuration;
 
-    public Region(RegionPlugin plugin, String id, Vectors vectors) {
+    public Region(RegionPlugin plugin, String id) {
         this.plugin = plugin;
         this.id = id;
         this.isWorking = true;
-        this.vectors = vectors;
         this.configuration = RegionConfiguration.create(plugin, id);
     }
 
@@ -69,8 +68,12 @@ public class Region implements ConfigurationSerializable {
         return vectors.getMin();
     }
 
-    public void setMinPos(Vector minPos) {
-        this.vectors.setMin(minPos);
+    public Vectors getVectors() {
+        return vectors;
+    }
+
+    public void setVectors(Vectors vectors) {
+        this.vectors = vectors;
     }
 
     public Vector getMaxPos() {
@@ -134,11 +137,12 @@ public class Region implements ConfigurationSerializable {
     public static Region deserialize(Map<String, Object> args) throws NoSuchObjectException {
         Region region;
 
-        if (args.containsKey("id") && args.containsKey("vectors")) {
-            region = new Region(plugin, (String) args.get("id"), (Vectors) args.get("vectors"));
+        if (args.containsKey("id")) {
+            region = new Region(plugin, (String) args.get("id"));
         } else {
             throw new NoSuchObjectException("There is not \"id\" or \"vectors\".");
         }
+        region.setVectors((Vectors) args.get("vectors"));
         region.setWorking((Boolean) args.get("isWoking"));
         region.setMembers((List<UUID>) args.get("members"));
         region.setOperators((List<UUID>) args.get("operators"));

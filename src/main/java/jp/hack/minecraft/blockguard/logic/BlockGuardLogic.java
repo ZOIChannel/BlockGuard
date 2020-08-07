@@ -10,10 +10,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.util.Vector;
 
 public class BlockGuardLogic extends Region implements Listener {
-    private Vectors vectors;
 
-    public BlockGuardLogic(RegionPlugin plugin, String id, Vectors vectors) {
-        super(plugin, id, vectors);
+    public BlockGuardLogic(RegionPlugin plugin, String id) {
+        super(plugin, id);
     }
 
     public void BlockBreakEvent(BlockBreakEvent e) {

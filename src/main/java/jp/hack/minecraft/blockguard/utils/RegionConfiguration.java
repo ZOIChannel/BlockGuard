@@ -21,6 +21,8 @@ public class RegionConfiguration extends Configuration {
         RegionConfiguration configuration = new RegionConfiguration(new File(regionFolder, "config.yml"));
         configuration.load();
 
+        System.out.println(plugin);
+        System.out.println(plugin.getConfiguration());
         plugin.getConfiguration().addRegion(id);
 
         return configuration;

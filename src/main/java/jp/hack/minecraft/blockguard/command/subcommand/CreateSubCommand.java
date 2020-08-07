@@ -1,16 +1,11 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
-import jp.hack.minecraft.blockguard.core.Region;
-import jp.hack.minecraft.blockguard.core.RegionPlugin;
-import jp.hack.minecraft.blockguard.core.SubCommand;
-import jp.hack.minecraft.blockguard.core.Vectors;
+import jp.hack.minecraft.blockguard.core.*;
 import jp.hack.minecraft.blockguard.core.utils.WorldEditorUtil;
 import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -47,7 +42,8 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
             return false;
         }
 
-        Region region = new Region(plugin, areaId, vectors);
+        Region region = new Region(plugin, areaId);
+        region.setVectors(vectors);
 
         RegionConfiguration configuration = region.getConfiguration();
 

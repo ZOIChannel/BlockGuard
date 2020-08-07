@@ -9,10 +9,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class CommandExecutor implements SubCommand {
-    protected final JavaPlugin plugin;
+    protected final RegionPlugin plugin;
     private Map<String, SubCommand> subCommands = new HashMap<>();
 
-    public CommandExecutor(JavaPlugin plugin) {
+    public CommandExecutor(RegionPlugin plugin) {
         this.plugin = plugin;
     }
 
