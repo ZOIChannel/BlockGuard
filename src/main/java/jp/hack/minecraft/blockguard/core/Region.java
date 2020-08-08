@@ -12,24 +12,41 @@ import java.rmi.NoSuchObjectException;
 import java.util.*;
 
 public class Region implements ConfigurationSerializable {
+    //メンバ変数
     private static RegionPlugin plugin;
     private String id;
     private boolean isWorking;
     private List<UUID> members = new ArrayList<>();
     private List<UUID> operators = new ArrayList<>();
-    // flags
-    private RegionFlag regionFlag = new RegionFlag();
     private Vectors vectors;
     private BoundingBox regionArea;
     private RegionConfiguration configuration;
+
+    // flags
+    public enum RegionFlagType {
+        SPREADFIRE,
+        EXPLODETNT,
+        BREAKBYWATER,
+        INVADEMOB
+    }
+
+    Map<RegionFlagType, Boolean> flags = new HashMap<>();
+
 
     public Region(RegionPlugin plugin, String id) {
         this.plugin = plugin;
         this.id = id;
         this.isWorking = true;
         this.configuration = RegionConfiguration.create(plugin, id);
+
+        //flag setup
+        flags.put(RegionFlagType.SPREADFIRE, false);
+        flags.put(RegionFlagType.EXPLODETNT, false);
+        flags.put(RegionFlagType.BREAKBYWATER, false);
+        flags.put(RegionFlagType.INVADEMOB, true);
     }
 
+    //getter
     public RegionPlugin getPlugin() {
         return plugin;
     }
@@ -64,14 +81,6 @@ public class Region implements ConfigurationSerializable {
 
     public void setOperators(List<UUID> operators) {
         this.operators = operators;
-    }
-
-    private void setRegionFlag(RegionFlag regionFlag) {
-        this.regionFlag = regionFlag;
-    }
-
-    private RegionFlag getRegionFlag() {
-        return regionFlag;
     }
 
     public Vector getMinPos() {
@@ -122,8 +131,6 @@ public class Region implements ConfigurationSerializable {
         return configuration;
     }
 
-    public void onBlockBreakEvent(BlockBreakEvent e) {}
-
     public BoundingBox getRegionArea() {
         if(regionArea == null) {
             Vector min = vectors.getMin();
@@ -133,6 +140,18 @@ public class Region implements ConfigurationSerializable {
         return regionArea;
     }
 
+    public void setFlag(RegionFlagType type, Boolean boo) {
+        flags.put(type, boo);
+    }
+
+    public Boolean isFlag(RegionFlagType type) {
+        return flags.get(type);
+    }
+
+    //setter
+
+    public void onBlockBreakEvent(BlockBreakEvent e) {}
+
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> result = new LinkedHashMap<>();
@@ -141,7 +160,6 @@ public class Region implements ConfigurationSerializable {
         result.put("isWorking", isWorking);
         result.put("members", members);
         result.put("operators", operators);
-        result.put("flags", regionFlag);
 
         return result;
     }
@@ -158,7 +176,6 @@ public class Region implements ConfigurationSerializable {
         region.setWorking((Boolean) args.get("isWoking"));
         region.setMembers((List<UUID>) args.get("members"));
         region.setOperators((List<UUID>) args.get("operators"));
-        region.setRegionFlag((RegionFlag) args.get("flags"));
 
         return region;
     }
