@@ -5,6 +5,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.util.Vector;
 
+import java.rmi.NoSuchObjectException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -50,5 +51,10 @@ public class Vectors implements ConfigurationSerializable {
         result.put("max", max);
         result.put("worldName", worldName);
         return result;
+    }
+
+    public static Vectors deserialize(Map<String, Object> args) {
+        Vectors vectors = new Vectors((Vector) args.get("min"), (Vector) args.get("max"), (String) args.get("worldName"));
+        return vectors;
     }
 }
