@@ -11,6 +11,7 @@ import java.util.Map;
 public class Vectors implements ConfigurationSerializable {
     private Vector max;
     private Vector min;
+    private String worldName;
 
     public Vector getMax() {
         return max;
@@ -28,9 +29,18 @@ public class Vectors implements ConfigurationSerializable {
         this.min = min;
     }
 
-    public Vectors(Vector min, Vector max) {
+    public String getWorldName() {
+        return worldName;
+    }
+
+    public void setWorldName(String worldName) {
+        this.worldName = worldName;
+    }
+
+    public Vectors(Vector min, Vector max, String worldName) {
         this.min = min;
         this.max = max;
+        this.worldName = worldName;
     }
 
     @Override
@@ -38,6 +48,7 @@ public class Vectors implements ConfigurationSerializable {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("min", min);
         result.put("max", max);
+        result.put("worldName", worldName);
         return result;
     }
 }
