@@ -17,6 +17,11 @@ public class Region implements ConfigurationSerializable {
     private boolean isWorking;
     private List<UUID> members = new ArrayList<>();
     private List<UUID> operators = new ArrayList<>();
+    // flags
+    private boolean spreadFire;
+    private boolean explodeTNT;
+    private boolean breakByWater;
+    private boolean invadeMob;
     private List<String> flags = new ArrayList<>();
     private Vectors vectors;
     private BoundingBox regionArea;
