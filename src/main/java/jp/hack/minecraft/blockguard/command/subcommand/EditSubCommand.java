@@ -38,6 +38,9 @@ public class EditSubCommand implements SubCommand {
         }
         sender.sendMessage("Editコマンドが実行されました。");
         sender.sendMessage("エリア名は"+args[0]+"、設定名は"+args[1]+"、値は"+args[2]+"です");
+
+        String id = args[0];
+
         return false;
     }
 

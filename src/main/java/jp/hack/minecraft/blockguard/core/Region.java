@@ -18,11 +18,7 @@ public class Region implements ConfigurationSerializable {
     private List<UUID> members = new ArrayList<>();
     private List<UUID> operators = new ArrayList<>();
     // flags
-    private boolean spreadFire;
-    private boolean explodeTNT;
-    private boolean breakByWater;
-    private boolean invadeMob;
-    private List<String> flags = new ArrayList<>();
+    private RegionFlag regionFlag = new RegionFlag();
     private Vectors vectors;
     private BoundingBox regionArea;
     private RegionConfiguration configuration;
@@ -70,12 +66,12 @@ public class Region implements ConfigurationSerializable {
         this.operators = operators;
     }
 
-    public List<String> getFlags() {
-        return flags;
+    private void setRegionFlag(RegionFlag regionFlag) {
+        this.regionFlag = regionFlag;
     }
 
-    public void setFlags(List<String> flags) {
-        this.flags = flags;
+    private RegionFlag getRegionFlag() {
+        return regionFlag;
     }
 
     public Vector getMinPos() {
@@ -122,19 +118,6 @@ public class Region implements ConfigurationSerializable {
         operators.contains(uuid);
     }
 
-    public void addFlags(String flagName){
-        flags.add(flagName);
-    }
-
-    public void removeFlags(String flagName){
-        flags.remove(flagName);
-    }
-
-    public Boolean isThereFlags(String flagName){
-        return flags.contains(flagName);
-    }
-
-
     public RegionConfiguration getConfiguration() {
         return configuration;
     }
@@ -158,7 +141,7 @@ public class Region implements ConfigurationSerializable {
         result.put("isWorking", isWorking);
         result.put("members", members);
         result.put("operators", operators);
-        result.put("flags", flags);
+        result.put("flags", regionFlag);
 
         return result;
     }
@@ -175,7 +158,7 @@ public class Region implements ConfigurationSerializable {
         region.setWorking((Boolean) args.get("isWoking"));
         region.setMembers((List<UUID>) args.get("members"));
         region.setOperators((List<UUID>) args.get("operators"));
-        region.setFlags((List<String>) args.get("flags"));
+        region.setRegionFlag((RegionFlag) args.get("flags"));
 
         return region;
     }
