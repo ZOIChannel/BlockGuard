@@ -18,7 +18,9 @@ public class WorldEditorUtil {
             Region region = session.getRegionSelector(wePlayer.getWorld()).getRegion();
             Vector min = new Vector(region.getMinimumPoint().getX(), region.getMinimumPoint().getY(), region.getMinimumPoint().getZ());
             Vector max = new Vector(region.getMaximumPoint().getX(), region.getMaximumPoint().getY(), region.getMaximumPoint().getZ());
-            Vectors vectors = new Vectors(min, max);
+            String worldName = player.getWorld().getName();
+
+            Vectors vectors = new Vectors(min, max, worldName);
             return vectors;
         } catch (WorldEditException e) {
             I18n.tl("error.worldedit.save", e);
