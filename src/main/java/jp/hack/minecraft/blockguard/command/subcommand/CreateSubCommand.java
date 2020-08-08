@@ -1,11 +1,14 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
 import jp.hack.minecraft.blockguard.core.*;
+import jp.hack.minecraft.blockguard.core.utils.I18n;
 import jp.hack.minecraft.blockguard.core.utils.WorldEditorUtil;
 import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 
@@ -28,22 +31,26 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(args.length > 0)) {
+            I18n.tl("error.command.invalid.arguments");
+            return false;
+        }
         sender.sendMessage("Createコマンドが実行されました。");
         sender.sendMessage("エリア名は"+args[0]+"です");
+
+        Player player = (Player) sender;
         String areaId = args[0];
 
-        if (args.length < 1) {
-            return false;
-        }
-
-        Vectors vectors = getVectors((Player) sender);
+        Vectors vectors = getVectors(player);
 
         if(vectors == null) {
+            I18n.tl("error.command.noposition");
             return false;
         }
 
-        Region region = new Region(plugin, areaId);
+        Region region = RegionManager.getInstance().createRegion(plugin, areaId);
         region.setVectors(vectors);
+        region.addOperator(player.getUniqueId());
 
         RegionConfiguration configuration = region.getConfiguration();
 

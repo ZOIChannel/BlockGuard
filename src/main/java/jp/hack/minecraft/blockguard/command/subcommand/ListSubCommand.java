@@ -1,7 +1,9 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
+import jp.hack.minecraft.blockguard.core.RegionManager;
 import jp.hack.minecraft.blockguard.core.RegionPlugin;
 import jp.hack.minecraft.blockguard.core.SubCommand;
+import jp.hack.minecraft.blockguard.core.utils.I18n;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -27,7 +29,12 @@ public class ListSubCommand implements SubCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         sender.sendMessage("Listコマンドが実行されました。");
-        return false;
+        List<String> regions = RegionManager.getInstance().getIds();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        regions.stream().forEach(id -> { stringBuilder.append(id).append(" "); });
+        sender.sendMessage(I18n.tl("message.command.list", stringBuilder.toString()));
+        return true;
     }
 
     @Override

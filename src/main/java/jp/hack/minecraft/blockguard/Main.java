@@ -11,9 +11,8 @@ public final class Main extends RegionPlugin {
     public void onEnable() {
         // Plugin startup logic
         super.onEnable();
-        getCommand("blockguard").setExecutor(new MainCommand(this));
 
-        System.out.println(this);
+        getCommand("blockguard").setExecutor(new MainCommand(this));
 
         RegionManager.getInstance().setGenerator((plugin, id) -> new BlockGuardLogic(plugin, id));
 

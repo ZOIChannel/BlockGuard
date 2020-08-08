@@ -30,8 +30,14 @@ public class PowerSubCommand implements SubCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(args.length > 1)) {
+            I18n.tl("error.command.invalid.arguments");
+            return false;
+        }
+
         sender.sendMessage("Powerコマンドが実行されました。");
         sender.sendMessage("エリア名は"+args[0]+"、値は"+args[1]+"です");
+
         String id = args[0];
         Boolean isWorking = Boolean.valueOf(args[1]);
 

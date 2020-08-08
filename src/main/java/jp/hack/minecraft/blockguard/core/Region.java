@@ -17,6 +17,7 @@ public class Region implements ConfigurationSerializable {
     private boolean isWorking;
     private List<UUID> members = new ArrayList<>();
     private List<UUID> operators = new ArrayList<>();
+    private List<String> flags = new ArrayList<>();
     private Vectors vectors;
     private BoundingBox regionArea;
     private RegionConfiguration configuration;
@@ -64,6 +65,14 @@ public class Region implements ConfigurationSerializable {
         this.operators = operators;
     }
 
+    public List<String> getFlags() {
+        return flags;
+    }
+
+    public void setFlags(List<String> flags) {
+        this.flags = flags;
+    }
+
     public Vector getMinPos() {
         return vectors.getMin();
     }
@@ -108,6 +117,19 @@ public class Region implements ConfigurationSerializable {
         operators.contains(uuid);
     }
 
+    public void addFlags(String flagName){
+        flags.add(flagName);
+    }
+
+    public void removeFlags(String flagName){
+        flags.remove(flagName);
+    }
+
+    public Boolean isThereFlags(String flagName){
+        return flags.contains(flagName);
+    }
+
+
     public RegionConfiguration getConfiguration() {
         return configuration;
     }
@@ -131,6 +153,8 @@ public class Region implements ConfigurationSerializable {
         result.put("isWorking", isWorking);
         result.put("members", members);
         result.put("operators", operators);
+        result.put("flags", flags);
+
         return result;
     }
 
@@ -146,6 +170,8 @@ public class Region implements ConfigurationSerializable {
         region.setWorking((Boolean) args.get("isWoking"));
         region.setMembers((List<UUID>) args.get("members"));
         region.setOperators((List<UUID>) args.get("operators"));
+        region.setFlags((List<String>) args.get("flags"));
+
         return region;
     }
 }

@@ -33,6 +33,10 @@ public class RegionManager implements Listener {
         regions.remove(id);
     }
 
+    public List<String> getIds() {
+        return new ArrayList<>(regions.keySet());
+    }
+
     public void setGenerator(RegionGenerator generator){
         this.generator = generator;
     }
