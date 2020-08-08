@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
@@ -62,6 +63,6 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return null;
+        return new ArrayList<>();
     }
 }

@@ -8,7 +8,9 @@ import jp.hack.minecraft.blockguard.utils.MainConfiguration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DeleteSubCommand implements SubCommand {
     RegionPlugin plugin;
@@ -48,6 +50,12 @@ public class DeleteSubCommand implements SubCommand {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return null;
+        List<String> ids = RegionManager.getInstance().getIds();
+        if (args.length < 1) {
+            return ids;
+        } else if (args.length < 2){
+            return ids.stream().filter(s -> s.startsWith(args[0])).collect(Collectors.toList());
+        }
+        return new ArrayList<>();
     }
 }
