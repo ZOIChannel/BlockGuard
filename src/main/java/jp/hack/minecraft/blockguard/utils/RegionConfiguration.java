@@ -7,13 +7,14 @@ import jp.hack.minecraft.blockguard.core.utils.Configuration;
 import java.io.File;
 
 public class RegionConfiguration extends Configuration {
+    private static File regionFolder;
 
     public RegionConfiguration(File configFile) {
         super(configFile);
     }
 
     public static RegionConfiguration create(RegionPlugin plugin, String id) {
-        File regionFolder = new File(plugin.getDataFolder(), id);
+        regionFolder = new File(plugin.getDataFolder(), id);
         if (!regionFolder.exists()) {
             regionFolder.mkdirs();
         }
@@ -21,8 +22,6 @@ public class RegionConfiguration extends Configuration {
         RegionConfiguration configuration = new RegionConfiguration(new File(regionFolder, "config.yml"));
         configuration.load();
 
-        System.out.println(plugin);
-        System.out.println(plugin.getConfiguration());
         plugin.getConfiguration().addRegion(id);
 
         return configuration;
@@ -30,5 +29,11 @@ public class RegionConfiguration extends Configuration {
 
     public void setRegion(Region region) {
         set("region", region);
+        save();
+    }
+
+    public Boolean delete() {
+        this.remove();
+        return regionFolder.delete();
     }
 }

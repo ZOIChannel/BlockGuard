@@ -3,6 +3,7 @@ package jp.hack.minecraft.blockguard.core;
 import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.BoundingBox;
@@ -150,6 +151,7 @@ public class Region implements ConfigurationSerializable {
 
     //setter
 
+    @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent e) {}
 
     @Override

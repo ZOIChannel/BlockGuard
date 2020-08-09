@@ -33,11 +33,10 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(args.length > 0)) {
-            I18n.tl("error.command.invalid.arguments");
+            sender.sendMessage(I18n.tl("error.command.invalid.arguments"));
             return false;
         }
         sender.sendMessage("Createコマンドが実行されました。");
-        sender.sendMessage("エリア名は"+args[0]+"です");
 
         Player player = (Player) sender;
         String areaId = args[0];
@@ -45,7 +44,7 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
         Vectors vectors = getVectors(player);
 
         if(vectors == null) {
-            I18n.tl("error.command.noposition");
+            sender.sendMessage(I18n.tl("error.command.noposition"));
             return false;
         }
 
@@ -58,6 +57,7 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
         configuration.setRegion(region);
         configuration.save();
 
+        sender.sendMessage("Createに成功しました");
         return true;
     }
 

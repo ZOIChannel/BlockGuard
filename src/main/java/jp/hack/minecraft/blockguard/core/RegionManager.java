@@ -29,8 +29,12 @@ public class RegionManager implements Listener {
         return region;
     }
 
-    public void deleteRegion(String id) {
+    public Boolean deleteRegion(RegionPlugin plugin, String id) {
+        if (findRegion(id).getConfiguration().delete()) {
+            return false;
+        }
         regions.remove(id);
+        return true;
     }
 
     public List<String> getIds() {

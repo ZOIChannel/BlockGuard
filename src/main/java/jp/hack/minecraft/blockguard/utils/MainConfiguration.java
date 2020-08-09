@@ -26,6 +26,7 @@ public class MainConfiguration extends Configuration {
             if(list.contains(id)!=true){
                 list.add(id);
                 setProperty("regions", list);
+                save();
             }
         }
     }
@@ -36,6 +37,7 @@ public class MainConfiguration extends Configuration {
             if(list.contains(id)==true){
                 list.remove(id);
                 setProperty("regions", list);
+                save();
             }
         }
     }

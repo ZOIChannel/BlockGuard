@@ -34,11 +34,10 @@ public class EditSubCommand implements SubCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(args.length > 2)) {
-            I18n.tl("error.command.invalid.arguments");
+            sender.sendMessage(I18n.tl("error.command.invalid.arguments"));
             return false;
         }
         sender.sendMessage("Editコマンドが実行されました。");
-        sender.sendMessage("エリア名は"+args[0]+"、設定名は"+args[1]+"、値は"+args[2]+"です");
 
         String id = args[0];
         String flagType = args[1];
@@ -55,35 +54,37 @@ public class EditSubCommand implements SubCommand {
                     region.setFlag(Region.RegionFlagType.valueOf(flagType), boo);
 
                 } else {
-                    I18n.tl("error.command.invalid.arguments", id);
+                    sender.sendMessage(I18n.tl("error.command.invalid.arguments", id));
                     return false;
                 }
 
             } else {
-                I18n.tl("error.command.invalid.arguments", onOrOff);
+                sender.sendMessage(I18n.tl("error.command.invalid.arguments", onOrOff));
                 return false;
             }
 
         } else {
-            I18n.tl("error.command.invalid.arguments", flags);
+            sender.sendMessage(I18n.tl("error.command.invalid.arguments", flags));
             return false;
         }
 
+        sender.sendMessage("Editに成功しました： "+id+" "+flagType+" "+onOrOff);
         return true;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> sArgs = Arrays.stream(args).filter(s1 -> !s1.equals(" ")).collect(Collectors.toList());
         List<String> ids = RegionManager.getInstance().getIds();
         List<String> flags = new ArrayList(Arrays.asList(Region.RegionFlagType.values()));
-        if (args.length < 1) {
+        if (sArgs.size() < 1) {
             return ids;
-        } else if (args.length < 2){
-            return ids.stream().filter(s -> s.startsWith(args[0])).collect(Collectors.toList());
-        } else if (args.length < 3) {
-            return flags.stream().filter(s -> s.startsWith(args[1])).collect(Collectors.toList());
-        } else if (args.length < 4) {
-            return Stream.of("on","off").filter(s -> s.startsWith(args[2])).collect(Collectors.toList());
+        } else if (sArgs.size() < 2){
+            return ids.stream().filter(s -> s.startsWith(sArgs.get(0))).collect(Collectors.toList());
+        } else if (sArgs.size() < 3) {
+            return flags.stream().filter(s -> s.startsWith(sArgs.get(1))).collect(Collectors.toList());
+        } else if (sArgs.size() < 4) {
+            return Stream.of("on","off").filter(s -> s.startsWith(sArgs.get(2))).collect(Collectors.toList());
         }
         return new ArrayList<>();
     }

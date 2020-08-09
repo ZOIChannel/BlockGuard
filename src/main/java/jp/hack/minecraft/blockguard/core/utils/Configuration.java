@@ -416,6 +416,10 @@ public class Configuration extends YamlConfiguration {
         set(path, null);
     }
 
+    public Boolean remove() {
+        return configFile.delete();
+    }
+
     @Override
     public synchronized Object get(String path) {
         return super.get(path);
