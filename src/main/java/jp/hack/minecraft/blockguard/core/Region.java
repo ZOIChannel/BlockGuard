@@ -104,15 +104,15 @@ public class Region implements ConfigurationSerializable {
         this.vectors.setMax(maxPos);
     }
 
-    public void addPlayer(UUID uuid){
+    public void addMember(UUID uuid){
         members.add(uuid);
     }
 
-    public void removePlayer(UUID uuid){
+    public void removeMember(UUID uuid){
         members.remove(uuid);
     }
 
-    public void isTherePlayer(UUID uuid){
+    public void isThereMember(UUID uuid){
         members.contains(uuid);
     }
 
