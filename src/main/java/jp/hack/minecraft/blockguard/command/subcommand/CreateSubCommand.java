@@ -7,8 +7,6 @@ import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,7 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
         sender.sendMessage("Createコマンドが実行されました。");
 
         Player player = (Player) sender;
-        String areaId = args[0];
+        String id = args[0];
 
         Vectors vectors = getVectors(player);
 
@@ -48,7 +46,7 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
             return false;
         }
 
-        Region region = RegionManager.getInstance().createRegion(plugin, areaId);
+        Region region = RegionManager.getInstance().createRegion(plugin, id);
         region.setVectors(vectors);
         region.addOperator(player.getUniqueId());
 
@@ -57,7 +55,7 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
         configuration.setRegion(region);
         configuration.save();
 
-        sender.sendMessage("Createに成功しました");
+        sender.sendMessage("設定の作成に成功しました: "+id);
         return true;
     }
 

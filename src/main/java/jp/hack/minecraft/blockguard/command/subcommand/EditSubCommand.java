@@ -68,7 +68,7 @@ public class EditSubCommand implements SubCommand {
             return false;
         }
 
-        sender.sendMessage("Editに成功しました： "+id+" "+flagType+" "+onOrOff);
+        sender.sendMessage("フラグの編集に成功しました: "+id+" "+flagType+" "+onOrOff);
         return true;
     }
 

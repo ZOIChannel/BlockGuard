@@ -7,7 +7,6 @@ import jp.hack.minecraft.blockguard.core.SubCommand;
 import jp.hack.minecraft.blockguard.core.utils.I18n;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,10 +14,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class PowerSubCommand implements SubCommand {
+public class WorkSubCommand implements SubCommand {
     RegionPlugin plugin;
 
-    public PowerSubCommand(RegionPlugin plugin){
+    public WorkSubCommand(RegionPlugin plugin){
         this.plugin = plugin;
     }
 
@@ -39,7 +38,7 @@ public class PowerSubCommand implements SubCommand {
             return false;
         }
 
-        sender.sendMessage("Powerコマンドが実行されました。");
+        sender.sendMessage("Workコマンドが実行されました。");
 
         String id = args[0];
         Boolean isWorking = Boolean.valueOf(args[1]);

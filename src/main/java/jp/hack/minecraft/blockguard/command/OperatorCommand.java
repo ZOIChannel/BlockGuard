@@ -1,8 +1,10 @@
-package jp.hack.minecraft.blockguard.command.subcommand;
+package jp.hack.minecraft.blockguard.command;
 
+import jp.hack.minecraft.blockguard.command.subcommand.AddOperatorSubCommand;
+import jp.hack.minecraft.blockguard.command.subcommand.DeleteOperatorSubCommand;
+import jp.hack.minecraft.blockguard.command.subcommand.ListOperatorSubCommand;
 import jp.hack.minecraft.blockguard.core.CommandExecutor;
 import jp.hack.minecraft.blockguard.core.RegionPlugin;
-import jp.hack.minecraft.blockguard.core.SubCommand;
 
 public class OperatorCommand extends CommandExecutor {
 
@@ -11,6 +13,7 @@ public class OperatorCommand extends CommandExecutor {
 
         addSubCommand(new AddOperatorSubCommand(plugin));
         addSubCommand(new DeleteOperatorSubCommand(plugin));
+        addSubCommand(new ListOperatorSubCommand(plugin));
     }
 
     @Override

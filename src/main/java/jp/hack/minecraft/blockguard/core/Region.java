@@ -1,11 +1,11 @@
 package jp.hack.minecraft.blockguard.core;
 
 import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
@@ -27,7 +27,7 @@ public class Region implements ConfigurationSerializable {
     public enum RegionFlagType {
         SPREADFIRE,
         EXPLODETNT,
-        BREAKBYWATER,
+        SPREADLIQUID,
         INVADEMOB
     }
 
@@ -43,7 +43,7 @@ public class Region implements ConfigurationSerializable {
         //flag setup
         flags.put(RegionFlagType.SPREADFIRE, false);
         flags.put(RegionFlagType.EXPLODETNT, false);
-        flags.put(RegionFlagType.BREAKBYWATER, false);
+        flags.put(RegionFlagType.SPREADLIQUID, false);
         flags.put(RegionFlagType.INVADEMOB, true);
     }
 
@@ -153,6 +153,12 @@ public class Region implements ConfigurationSerializable {
 
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent e) {}
+
+    @EventHandler
+    public void onBlockExplodeEvent(BlockExplodeEvent e) {}
+
+    @EventHandler
+    public void onBlockSpreadEvent(BlockSpreadEvent e) {}
 
     @Override
     public Map<String, Object> serialize() {

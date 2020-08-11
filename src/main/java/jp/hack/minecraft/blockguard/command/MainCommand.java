@@ -12,7 +12,7 @@ public class MainCommand extends CommandExecutor {
         addSubCommand(new DeleteSubCommand(plugin));
         addSubCommand(new EditSubCommand(plugin));
         addSubCommand(new ListSubCommand(plugin));
-        addSubCommand(new PowerSubCommand(plugin));
+        addSubCommand(new WorkSubCommand(plugin));
         addSubCommand(new MemberCommand(plugin));
         addSubCommand(new OperatorCommand(plugin));
     }

@@ -3,15 +3,13 @@ package jp.hack.minecraft.blockguard.logic;
 import jp.hack.minecraft.blockguard.core.Region;
 import jp.hack.minecraft.blockguard.core.RegionManager;
 import jp.hack.minecraft.blockguard.core.RegionPlugin;
-import jp.hack.minecraft.blockguard.core.Vectors;
 import org.bukkit.GameRule;
-import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.util.Vector;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
 
 public class BlockGuardLogic extends Region implements Listener {
 
@@ -20,16 +18,28 @@ public class BlockGuardLogic extends Region implements Listener {
     }
 
     @EventHandler
-    public void BlockBreakEvent(BlockBreakEvent e) {
+    public void onBlockBreakEvent(BlockBreakEvent e) {
         if(isWorking()) {
             e.setCancelled(true);
         }
     }
 
-    public void ControlSpreadFire(String id, boolean value){
-        String worldName = RegionManager.getInstance().findRegion(id).getVectors().getWorldName();
-        World world = getPlugin().getServer().getWorld(worldName);
+    @EventHandler
+    public void onBlockSpreadEvent(BlockSpreadEvent e) {
+        if(isWorking()) {
+            String blockName = e.getSource().getType().data.getName();
+            if (blockName.equals("Water") || blockName.equals("Lava")) {
+                if (this.isFlag(RegionFlagType.SPREADLIQUID)) e.setCancelled(true);
+            } else if (blockName.equals("Fire")) {
+                if (this.isFlag(RegionFlagType.SPREADFIRE)) e.setCancelled(true);
+            }
+        }
+    }
 
-        world.setGameRule(GameRule.DO_FIRE_TICK, value);
+    @EventHandler
+    public void onBlockExplodeEvent(BlockExplodeEvent e) {
+        if(isWorking()) {
+            if (this.isFlag(RegionFlagType.EXPLODETNT)) e.setCancelled(true);
+        }
     }
 }

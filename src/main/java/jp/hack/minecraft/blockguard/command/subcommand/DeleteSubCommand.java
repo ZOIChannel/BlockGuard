@@ -5,7 +5,6 @@ import jp.hack.minecraft.blockguard.core.RegionPlugin;
 import jp.hack.minecraft.blockguard.core.SubCommand;
 import jp.hack.minecraft.blockguard.core.utils.I18n;
 import jp.hack.minecraft.blockguard.utils.MainConfiguration;
-import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -39,17 +38,17 @@ public class DeleteSubCommand implements SubCommand {
         }
         sender.sendMessage("Deleteコマンドが実行されました。");
 
-        String areaId = args[0];
+        String id = args[0];
 
         RegionManager regionManager = RegionManager.getInstance();
-        if(regionManager.deleteRegion(plugin, areaId)) {
+        if(regionManager.deleteRegion(plugin, id)) {
             return false;
         }
 
         MainConfiguration configuration = plugin.getConfiguration();
-        configuration.deleteRegion(areaId);
+        configuration.deleteRegion(id);
 
-        sender.sendMessage("Deleteに成功しました");
+        sender.sendMessage("設定の消去に成功しました: "+id);
         return true;
     }
 

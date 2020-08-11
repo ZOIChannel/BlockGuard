@@ -1,5 +1,6 @@
 package jp.hack.minecraft.blockguard.command.subcommand;
 
+import jp.hack.minecraft.blockguard.core.Region;
 import jp.hack.minecraft.blockguard.core.RegionManager;
 import jp.hack.minecraft.blockguard.core.RegionPlugin;
 import jp.hack.minecraft.blockguard.core.SubCommand;
@@ -7,12 +8,13 @@ import jp.hack.minecraft.blockguard.core.utils.I18n;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListSubCommand implements SubCommand {
+public class ListOperatorSubCommand implements SubCommand {
     RegionPlugin plugin;
 
-    public ListSubCommand(RegionPlugin plugin){
+    public ListOperatorSubCommand(RegionPlugin plugin){
         this.plugin = plugin;
     }
 
@@ -28,17 +30,24 @@ public class ListSubCommand implements SubCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        sender.sendMessage("Listコマンドが実行されました。");
-        List<String> regions = RegionManager.getInstance().getIds();
+        sender.sendMessage("ListOperatorコマンドが実行されました。");
+        if (args.length < 1) {
+            sender.sendMessage(I18n.tl("error.command.invalid.arguments"));
+            return false;
+        }
+
+        String id = args[0];
+        Region region = RegionManager.getInstance().findRegion(id);
+
         StringBuilder stringBuilder = new StringBuilder();
 
-        regions.stream().forEach(id -> { stringBuilder.append(id).append(" "); });
-        sender.sendMessage(I18n.tl("message.command.list.regions", stringBuilder.toString()));
+        region.getOperators().stream().forEach(ope -> { stringBuilder.append(ope).append(" "); });
+        sender.sendMessage(I18n.tl("message.command.list.operators", stringBuilder.toString()));
         return true;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return null;
+        return new ArrayList<>();
     }
 }
