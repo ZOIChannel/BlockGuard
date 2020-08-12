@@ -4,8 +4,10 @@ import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockSpreadEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
@@ -136,7 +138,7 @@ public class Region implements ConfigurationSerializable {
         if(regionArea == null) {
             Vector min = vectors.getMin();
             Vector max = vectors.getMax();
-            regionArea = new BoundingBox(min.getX(), min.getY(), min.getZ(), max.getX(), max.getY(), max.getZ());
+            regionArea = new BoundingBox(min.getX(), min.getY(), min.getZ(), max.getX()+1, max.getY()+1, max.getZ()+1);
         }
         return regionArea;
     }
@@ -152,13 +154,16 @@ public class Region implements ConfigurationSerializable {
     //setter
 
     @EventHandler
+    public void onBlockPlaceEvent(BlockPlaceEvent e) {}
+
+    @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent e) {}
 
     @EventHandler
-    public void onBlockExplodeEvent(BlockExplodeEvent e) {}
+    public void onEntityExplodeEvent(EntityExplodeEvent e) {}
 
     @EventHandler
-    public void onBlockSpreadEvent(BlockSpreadEvent e) {}
+    public void onBlockPhysicsEvent(BlockPhysicsEvent e) {}
 
     @Override
     public Map<String, Object> serialize() {
@@ -182,8 +187,17 @@ public class Region implements ConfigurationSerializable {
         }
         region.setVectors((Vectors) args.get("vectors"));
         region.setWorking((Boolean) args.get("isWoking"));
-        region.setMembers((List<UUID>) args.get("members"));
-        region.setOperators((List<UUID>) args.get("operators"));
+
+        if(args.get("members") != null) {
+            region.setMembers((List<UUID>) args.get("members"));
+        } else {
+            region.setMembers(new ArrayList<>());
+        }
+        if(args.get("operators") != null) {
+            region.setOperators((List<UUID>) args.get("operators"));
+        } else {
+            region.setOperators(new ArrayList<>());
+        }
 
         return region;
     }

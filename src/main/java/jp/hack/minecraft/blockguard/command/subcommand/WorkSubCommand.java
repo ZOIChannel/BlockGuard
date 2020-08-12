@@ -23,7 +23,7 @@ public class WorkSubCommand implements SubCommand {
 
     @Override
     public String getName() {
-        return "power";
+        return "work";
     }
 
     @Override
@@ -54,6 +54,7 @@ public class WorkSubCommand implements SubCommand {
             sender.sendMessage(I18n.tl("error.command.invalid.arguments"));
             return false;
         }
+        region.getConfiguration().setRegion(region);
 
         return true;
     }

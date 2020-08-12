@@ -45,6 +45,7 @@ public class AddMemberSubCommand implements SubCommand {
         RegionManager regionManager = RegionManager.getInstance();
         Region region = regionManager.findRegion(id);
         region.addMember(Bukkit.getPlayer(playerName).getUniqueId());
+        region.getConfiguration().setRegion(region);
 
         sender.sendMessage("メンバーの追加に成功しました: "+id+" "+playerName);
         return true;

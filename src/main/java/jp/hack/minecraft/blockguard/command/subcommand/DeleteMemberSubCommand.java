@@ -49,6 +49,7 @@ public class DeleteMemberSubCommand implements SubCommand {
             RegionManager regionManager = RegionManager.getInstance();
             Region region = regionManager.findRegion(id);
             region.removeMember(playerUUID);
+            region.getConfiguration().setRegion(region);
         } else {
             sender.sendMessage(I18n.tl("error.command.nosuch.player.region"));
             return false;

@@ -52,6 +52,7 @@ public class EditSubCommand implements SubCommand {
                 if (region != null) {
                     Boolean boo = onOrOff.equals("on");
                     region.setFlag(Region.RegionFlagType.valueOf(flagType), boo);
+                    region.getConfiguration().setRegion(region);
 
                 } else {
                     sender.sendMessage(I18n.tl("error.command.invalid.arguments", id));
@@ -76,7 +77,7 @@ public class EditSubCommand implements SubCommand {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> sArgs = Arrays.stream(args).filter(s1 -> !s1.equals(" ")).collect(Collectors.toList());
         List<String> ids = RegionManager.getInstance().getIds();
-        List<String> flags = new ArrayList(Arrays.asList(Region.RegionFlagType.values()));
+        List<String> flags = Arrays.stream(Region.RegionFlagType.values()).map(e -> e.name()).collect(Collectors.toList());
         if (sArgs.size() < 1) {
             return ids;
         } else if (sArgs.size() < 2){
@@ -84,7 +85,7 @@ public class EditSubCommand implements SubCommand {
         } else if (sArgs.size() < 3) {
             return flags.stream().filter(s -> s.startsWith(sArgs.get(1))).collect(Collectors.toList());
         } else if (sArgs.size() < 4) {
-            return Stream.of("on","off").filter(s -> s.startsWith(sArgs.get(2))).collect(Collectors.toList());
+            return Stream.of("on", "off").filter(s -> s.startsWith(sArgs.get(2))).collect(Collectors.toList());
         }
         return new ArrayList<>();
     }
