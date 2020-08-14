@@ -91,8 +91,7 @@ public class RegionManager implements Listener {
 
     @EventHandler
     public void onEntityExplodeEvent(EntityExplodeEvent event) {
-        System.out.println(event);
-        Location loc = event.getLocation();
+        Location loc = event.getEntity().getLocation();
         if (!regions.isEmpty()) {
             for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
                 Region r = ite.next();

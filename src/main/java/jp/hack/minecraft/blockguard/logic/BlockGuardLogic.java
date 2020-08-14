@@ -45,6 +45,7 @@ public class BlockGuardLogic extends Region implements Listener {
     @EventHandler
     public void onEntityExplodeEvent(BlockExplodeEvent e) {
         if(isWorking()) {
+            System.out.println(this.isFlag(RegionFlagType.EXPLODETNT));
             if (!this.isFlag(RegionFlagType.EXPLODETNT)) e.setCancelled(true);
         }
     }

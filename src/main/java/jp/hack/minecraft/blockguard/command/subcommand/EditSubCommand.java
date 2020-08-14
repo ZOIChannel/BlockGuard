@@ -43,7 +43,7 @@ public class EditSubCommand implements SubCommand {
         String flagType = args[1];
         String onOrOff = args[2];
 
-        List<String> flags = new ArrayList(Arrays.asList(Region.RegionFlagType.values()));
+        List<String> flags = Arrays.stream(Region.RegionFlagType.values()).map(v -> v.name()).collect(Collectors.toList());
 
         if (flags.contains(flagType)) {
             if (onOrOff.equals("on") || onOrOff.equals("off")) {
