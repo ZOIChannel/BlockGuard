@@ -3,6 +3,7 @@ package jp.hack.minecraft.blockguard.logic;
 import jp.hack.minecraft.blockguard.core.Region;
 import jp.hack.minecraft.blockguard.core.RegionManager;
 import jp.hack.minecraft.blockguard.core.RegionPlugin;
+import jp.hack.minecraft.blockguard.core.Vectors;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
@@ -33,7 +34,6 @@ public class BlockGuardLogic extends Region implements Listener {
     public void onBlockPhysicsEvent(BlockPhysicsEvent e) {
         if(isWorking()) {
             String blockName = e.getSourceBlock().getType().name();
-            System.out.println(blockName);
             if (blockName.equals("WATER") || blockName.equals("LAVA")) {
                 if (!this.isFlag(RegionFlagType.SPREADLIQUID)) e.setCancelled(true);
             } else if (blockName.equals("FIRE")) {
@@ -44,8 +44,9 @@ public class BlockGuardLogic extends Region implements Listener {
 
     @EventHandler
     public void onEntityExplodeEvent(BlockExplodeEvent e) {
+        System.out.println(this.isFlag(RegionFlagType.EXPLODETNT));
+        System.out.println("adfsafdsdfa");
         if(isWorking()) {
-            System.out.println(this.isFlag(RegionFlagType.EXPLODETNT));
             if (!this.isFlag(RegionFlagType.EXPLODETNT)) e.setCancelled(true);
         }
     }

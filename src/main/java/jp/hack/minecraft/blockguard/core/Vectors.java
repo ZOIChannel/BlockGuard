@@ -38,6 +38,8 @@ public class Vectors implements ConfigurationSerializable {
         this.worldName = worldName;
     }
 
+    public Vectors() {}
+
     public Vectors(Vector min, Vector max, String worldName) {
         this.min = min;
         this.max = max;
@@ -54,7 +56,17 @@ public class Vectors implements ConfigurationSerializable {
     }
 
     public static Vectors deserialize(Map<String, Object> args) {
-        Vectors vectors = new Vectors((Vector) args.get("min"), (Vector) args.get("max"), (String) args.get("worldName"));
+        Vectors vectors = new Vectors();
+
+        if(args.containsKey("min")) {
+            vectors.setMin( (Vector) args.get("min"));
+        }
+        if(args.containsKey("max")) {
+            vectors.setMin( (Vector) args.get("max"));
+        }
+        if(args.containsKey("worldName")) {
+            vectors.setWorldName( (String) args.get("worldName"));
+        }
         return vectors;
     }
 }

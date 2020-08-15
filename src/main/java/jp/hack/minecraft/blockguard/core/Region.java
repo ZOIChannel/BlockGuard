@@ -13,6 +13,7 @@ import org.bukkit.util.Vector;
 
 import java.rmi.NoSuchObjectException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Region implements ConfigurationSerializable {
     //メンバ変数
@@ -86,24 +87,16 @@ public class Region implements ConfigurationSerializable {
         this.operators = operators;
     }
 
-    public Vector getMinPos() {
-        return vectors.getMin();
-    }
-
     public Vectors getVectors() {
         return vectors;
     }
 
     public void setVectors(Vectors vectors) {
         this.vectors = vectors;
-    }
 
-    public Vector getMaxPos() {
-        return vectors.getMin();
-    }
-
-    public void setMaxPos(Vector maxPos) {
-        this.vectors.setMax(maxPos);
+        Vector min = vectors.getMin();
+        Vector max = vectors.getMax();
+        setRegionArea(new BoundingBox(min.getX(), min.getY(), min.getZ(), max.getX()+1, max.getY()+1, max.getZ()+1));
     }
 
     public void addMember(UUID uuid){
@@ -134,12 +127,11 @@ public class Region implements ConfigurationSerializable {
         return configuration;
     }
 
+    public void setRegionArea(BoundingBox regionArea) {
+        this.regionArea = regionArea;
+    }
+
     public BoundingBox getRegionArea() {
-        if(regionArea == null) {
-            Vector min = vectors.getMin();
-            Vector max = vectors.getMax();
-            regionArea = new BoundingBox(min.getX(), min.getY(), min.getZ(), max.getX()+1, max.getY()+1, max.getZ()+1);
-        }
         return regionArea;
     }
 
@@ -171,30 +163,31 @@ public class Region implements ConfigurationSerializable {
         result.put("id", id);
         result.put("vectors", vectors);
         result.put("isWorking", isWorking);
-        result.put("members", members);
-        result.put("operators", operators);
+        result.put("members", members.stream().map(v -> v.toString()).collect(Collectors.toList()));
+        result.put("operators", operators.stream().map(v -> v.toString()).collect(Collectors.toList()));
 
         return result;
     }
 
-    public static Region deserialize(Map<String, Object> args) throws NoSuchObjectException {
+    public static Region deserialize(Map<String, Object> args) {
         Region region;
 
-        if (args.containsKey("id")) {
-            region = new Region(plugin, (String) args.get("id"));
-        } else {
-            throw new NoSuchObjectException("There is not \"id\" or \"vectors\".");
-        }
-        region.setVectors((Vectors) args.get("vectors"));
-        region.setWorking((Boolean) args.get("isWoking"));
+        region = new Region(plugin, (String) args.get("id"));
 
-        if(args.get("members") != null) {
-            region.setMembers((List<UUID>) args.get("members"));
+        if(args.containsKey("vectors")) {
+            region.setVectors((Vectors) args.get("vectors"));
+        }
+        if(args.containsKey("isWorking")) {
+            region.setWorking((Boolean) args.get("isWorking"));
+        }
+
+        if(args.containsKey("members")) {
+            region.setMembers(Arrays.asList(args.get("members")).stream().map(v -> UUID.fromString((String) v)).collect(Collectors.toList()));
         } else {
             region.setMembers(new ArrayList<>());
         }
-        if(args.get("operators") != null) {
-            region.setOperators((List<UUID>) args.get("operators"));
+        if(args.containsKey("operators")) {
+            region.setOperators(Arrays.asList(args.get("operators")).stream().map(v -> UUID.fromString((String) v)).collect(Collectors.toList()));
         } else {
             region.setOperators(new ArrayList<>());
         }

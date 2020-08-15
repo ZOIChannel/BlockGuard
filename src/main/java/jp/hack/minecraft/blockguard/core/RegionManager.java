@@ -26,7 +26,7 @@ public class RegionManager implements Listener {
         return regions.get(id);
     }
 
-    public Region createRegion(RegionPlugin plugin, String id){
+    public Region createRegion(RegionPlugin plugin, String id, Vectors vectors){
         Region region = generator.createRegion(plugin, id);
         regions.put(id, region);
         return region;
@@ -48,6 +48,10 @@ public class RegionManager implements Listener {
         this.generator = generator;
     }
 
+    public void saveRegion(String id, Region region) {
+        regions.put(id, region);
+    }
+
     public void loadRegion(RegionPlugin plugin){
         if(generator!=null) {
             List<String> regionList = plugin.getConfiguration().getRegionList();
@@ -64,6 +68,7 @@ public class RegionManager implements Listener {
     @EventHandler
     public void onBlockPlaceEvent(BlockPlaceEvent event) {
         Location loc = event.getBlock().getLocation();
+        System.out.println(event);
         if (!regions.isEmpty()) {
             for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
                 Region r = ite.next();
@@ -78,6 +83,7 @@ public class RegionManager implements Listener {
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event) {
         Location loc = event.getBlock().getLocation();
+        System.out.println(event);
         if (!regions.isEmpty()) {
             for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
                 Region r = ite.next();
@@ -91,10 +97,12 @@ public class RegionManager implements Listener {
 
     @EventHandler
     public void onEntityExplodeEvent(EntityExplodeEvent event) {
-        Location loc = event.getEntity().getLocation();
+        Location loc = event.getLocation();
+        System.out.println(event);
         if (!regions.isEmpty()) {
             for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
                 Region r = ite.next();
+                System.out.println("faddfdfdfdasfd");
                 if (r.getRegionArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
                     r.onEntityExplodeEvent(event);
                     break;
