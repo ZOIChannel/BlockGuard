@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
@@ -54,7 +55,12 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
 
         RegionConfiguration configuration = region.getConfiguration();
 
-        configuration.setRegion(region);
+        configuration.setId(id);
+        configuration.setVectors(vectors);
+        configuration.setWorking(true);
+        configuration.setOperators(Arrays.asList(player.getUniqueId().toString()));
+        configuration.setMembers(new ArrayList<>());
+
         configuration.save();
 
         sender.sendMessage("設定の作成に成功しました: "+id);

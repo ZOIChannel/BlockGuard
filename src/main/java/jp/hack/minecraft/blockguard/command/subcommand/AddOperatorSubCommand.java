@@ -45,7 +45,7 @@ public class AddOperatorSubCommand implements SubCommand {
         RegionManager regionManager = RegionManager.getInstance();
         Region region = regionManager.findRegion(id);
         region.addOperator(Bukkit.getPlayer(playerName).getUniqueId());
-        region.getConfiguration().setRegion(region);
+        region.getConfiguration().setOperators(region.getOperators().stream().map(v -> v.toString()).collect(Collectors.toList()));
 
         sender.sendMessage("オペレーターの追加に成功しました: "+id+" "+playerName);
         return true;

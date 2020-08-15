@@ -2,19 +2,21 @@ package jp.hack.minecraft.blockguard.utils;
 
 import jp.hack.minecraft.blockguard.core.Region;
 import jp.hack.minecraft.blockguard.core.RegionPlugin;
+import jp.hack.minecraft.blockguard.core.Vectors;
 import jp.hack.minecraft.blockguard.core.utils.Configuration;
 
 import java.io.File;
+import java.util.List;
 
 public class RegionConfiguration extends Configuration {
-    private static File regionFolder;
 
     public RegionConfiguration(File configFile) {
         super(configFile);
     }
 
     public static RegionConfiguration create(RegionPlugin plugin, String id) {
-        regionFolder = new File(plugin.getDataFolder(), id);
+
+        File regionFolder = new File(plugin.getDataFolder(), id);
         if (!regionFolder.exists()) {
             regionFolder.mkdirs();
         }
@@ -27,13 +29,42 @@ public class RegionConfiguration extends Configuration {
         return configuration;
     }
 
-    public void setRegion(Region region) {
-        set("region", region);
-        save();
+    public void setId(String id) {
+        set("id", id);
     }
 
-    public Boolean delete() {
-        this.remove();
-        return regionFolder.delete();
+    public String getId() {
+        return (String) get("id");
+    }
+
+    public void setVectors(Vectors vectors) {
+        set("vectors", vectors);
+    }
+    public Vectors getVectors(){
+        return (Vectors) get("vectors");
+    }
+
+    public void setWorking(Boolean isWorking) {
+        set("isWorking", isWorking);
+    }
+
+    public Boolean isWorking() {
+        return (Boolean) get("isWorking");
+    }
+
+    public void setMembers(List<String> members) {
+        set("members", members);
+    }
+
+    public List<String> getMembers() {
+        return (List<String>) get("members");
+    }
+
+    public void setOperators(List<String> operators) {
+        set("operators", operators);
+    }
+
+    public List<String> getOperators() {
+        return (List<String>) get("operators");
     }
 }

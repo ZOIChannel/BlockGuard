@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 
+import java.io.File;
 import java.util.*;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPhysicsEvent;
@@ -33,9 +34,12 @@ public class RegionManager implements Listener {
     }
 
     public Boolean deleteRegion(RegionPlugin plugin, String id) {
-        if (findRegion(id).getConfiguration().delete()) {
+        File regionFolder = new File(plugin.getDataFolder(), id);
+        if (!regionFolder.delete()) {
             return false;
         }
+        plugin.getConfiguration().deleteRegion(id);
+
         regions.remove(id);
         return true;
     }
@@ -68,11 +72,13 @@ public class RegionManager implements Listener {
     @EventHandler
     public void onBlockPlaceEvent(BlockPlaceEvent event) {
         Location loc = event.getBlock().getLocation();
-        System.out.println(event);
         if (!regions.isEmpty()) {
             for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
                 Region r = ite.next();
+                System.out.println(r.getVectors());
+                System.out.println(r.getRegionArea());
                 if (r.getRegionArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
+                    System.out.println("affds");
                     r.onBlockPlaceEvent(event);
                     break;
                 }
@@ -83,11 +89,13 @@ public class RegionManager implements Listener {
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event) {
         Location loc = event.getBlock().getLocation();
-        System.out.println(event);
         if (!regions.isEmpty()) {
             for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
                 Region r = ite.next();
+                System.out.println(r.getVectors());
+                System.out.println(r.getRegionArea());
                 if (r.getRegionArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
+                    System.out.println("affds");
                     r.onBlockBreakEvent(event);
                     break;
                 }
@@ -98,12 +106,13 @@ public class RegionManager implements Listener {
     @EventHandler
     public void onEntityExplodeEvent(EntityExplodeEvent event) {
         Location loc = event.getLocation();
-        System.out.println(event);
         if (!regions.isEmpty()) {
             for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
                 Region r = ite.next();
-                System.out.println("faddfdfdfdasfd");
+                System.out.println(r.getVectors());
+                System.out.println(r.getRegionArea());
                 if (r.getRegionArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
+                    System.out.println("affds");
                     r.onEntityExplodeEvent(event);
                     break;
                 }

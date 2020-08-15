@@ -54,7 +54,7 @@ public class WorkSubCommand implements SubCommand {
             sender.sendMessage(I18n.tl("error.command.invalid.arguments"));
             return false;
         }
-        region.getConfiguration().setRegion(region);
+        region.getConfiguration().setWorking(region.isWorking());
 
         return true;
     }

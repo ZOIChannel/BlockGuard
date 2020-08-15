@@ -8,6 +8,7 @@ import jp.hack.minecraft.blockguard.utils.MainConfiguration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,12 +42,9 @@ public class DeleteSubCommand implements SubCommand {
         String id = args[0];
 
         RegionManager regionManager = RegionManager.getInstance();
-        if(regionManager.deleteRegion(plugin, id)) {
+        if (!regionManager.deleteRegion(plugin, id)) {
             return false;
         }
-
-        MainConfiguration configuration = plugin.getConfiguration();
-        configuration.deleteRegion(id);
 
         sender.sendMessage("設定の消去に成功しました: "+id);
         return true;

@@ -51,7 +51,7 @@ public class DeleteOperatorSubCommand implements SubCommand {
             RegionManager regionManager = RegionManager.getInstance();
             Region region = regionManager.findRegion(id);
             region.removeOperator(playerUUID);
-            region.getConfiguration().setRegion(region);
+            region.getConfiguration().setOperators(region.getOperators().stream().map(v -> v.toString()).collect(Collectors.toList()));
         } else {
             sender.sendMessage(I18n.tl("error.command.nosuch.player.region"));
             return false;

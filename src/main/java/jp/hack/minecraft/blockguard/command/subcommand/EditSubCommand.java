@@ -52,8 +52,6 @@ public class EditSubCommand implements SubCommand {
                 if (region != null) {
                     Boolean boo = onOrOff.equals("on");
                     region.setFlag(Region.RegionFlagType.valueOf(flagType), boo);
-                    region.getConfiguration().setRegion(region);
-
                 } else {
                     sender.sendMessage(I18n.tl("error.command.invalid.arguments", id));
                     return false;
