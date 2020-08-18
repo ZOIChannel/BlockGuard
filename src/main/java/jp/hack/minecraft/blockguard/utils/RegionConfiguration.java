@@ -6,7 +6,8 @@ import jp.hack.minecraft.blockguard.core.Vectors;
 import jp.hack.minecraft.blockguard.core.utils.Configuration;
 
 import java.io.File;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RegionConfiguration extends Configuration {
 
@@ -40,6 +41,7 @@ public class RegionConfiguration extends Configuration {
     public void setVectors(Vectors vectors) {
         set("vectors", vectors);
     }
+
     public Vectors getVectors(){
         return (Vectors) get("vectors");
     }
@@ -56,15 +58,15 @@ public class RegionConfiguration extends Configuration {
         set("members", members);
     }
 
-    public List<String> getMembers() {
-        return (List<String>) get("members");
+    public List<UUID> getMembers() {
+        return new ArrayList<>((List<String>) get("members")).stream().map(v -> UUID.fromString(v)).collect(Collectors.toList());
     }
 
     public void setOperators(List<String> operators) {
         set("operators", operators);
     }
 
-    public List<String> getOperators() {
-        return (List<String>) get("operators");
+    public List<UUID> getOperators() {
+        return new ArrayList<>((List<String>) get("operators")).stream().map(v -> UUID.fromString(v)).collect(Collectors.toList());
     }
 }

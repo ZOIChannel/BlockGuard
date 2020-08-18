@@ -1,14 +1,12 @@
 package jp.hack.minecraft.blockguard.logic;
 
 import jp.hack.minecraft.blockguard.core.Region;
-import jp.hack.minecraft.blockguard.core.RegionManager;
 import jp.hack.minecraft.blockguard.core.RegionPlugin;
-import jp.hack.minecraft.blockguard.core.Vectors;
-import org.bukkit.GameRule;
-import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
+import org.bukkit.event.entity.EntityExplodeEvent;
 
 public class BlockGuardLogic extends Region implements Listener {
 
@@ -18,15 +16,21 @@ public class BlockGuardLogic extends Region implements Listener {
 
     @EventHandler
     public void onBlockPlaceEvent(BlockPlaceEvent e) {
+        Player p = e.getPlayer();
         if(isWorking()) {
-            e.setCancelled(true);
+            if( !( getMembers().contains(p.getUniqueId()) || getOperators().contains(p.getUniqueId()) ) ) {
+                e.setCancelled(true);
+            }
         }
     }
 
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent e) {
+        Player p = e.getPlayer();
         if(isWorking()) {
-            e.setCancelled(true);
+            if( !( getMembers().contains(p.getUniqueId()) || getOperators().contains(p.getUniqueId()) ) ) {
+                e.setCancelled(true);
+            }
         }
     }
 
@@ -43,9 +47,7 @@ public class BlockGuardLogic extends Region implements Listener {
     }
 
     @EventHandler
-    public void onEntityExplodeEvent(BlockExplodeEvent e) {
-        System.out.println(this.isFlag(RegionFlagType.EXPLODETNT));
-        System.out.println("adfsafdsdfa");
+    public void onEntityExplodeEvent(EntityExplodeEvent e) {
         if(isWorking()) {
             if (!this.isFlag(RegionFlagType.EXPLODETNT)) e.setCancelled(true);
         }

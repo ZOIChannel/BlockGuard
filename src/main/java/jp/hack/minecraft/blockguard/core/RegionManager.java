@@ -1,5 +1,6 @@
 package jp.hack.minecraft.blockguard.core;
 
+import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -35,9 +36,10 @@ public class RegionManager implements Listener {
 
     public Boolean deleteRegion(RegionPlugin plugin, String id) {
         File regionFolder = new File(plugin.getDataFolder(), id);
-        if (!regionFolder.delete()) {
-            return false;
-        }
+        File configuration = new File(regionFolder, "config.yml");
+
+        configuration.delete();
+        regionFolder.delete();
         plugin.getConfiguration().deleteRegion(id);
 
         regions.remove(id);
@@ -75,10 +77,7 @@ public class RegionManager implements Listener {
         if (!regions.isEmpty()) {
             for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
                 Region r = ite.next();
-                System.out.println(r.getVectors());
-                System.out.println(r.getRegionArea());
                 if (r.getRegionArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
-                    System.out.println("affds");
                     r.onBlockPlaceEvent(event);
                     break;
                 }
@@ -92,10 +91,7 @@ public class RegionManager implements Listener {
         if (!regions.isEmpty()) {
             for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
                 Region r = ite.next();
-                System.out.println(r.getVectors());
-                System.out.println(r.getRegionArea());
                 if (r.getRegionArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
-                    System.out.println("affds");
                     r.onBlockBreakEvent(event);
                     break;
                 }
@@ -105,14 +101,11 @@ public class RegionManager implements Listener {
 
     @EventHandler
     public void onEntityExplodeEvent(EntityExplodeEvent event) {
-        Location loc = event.getLocation();
+        Location loc = event.getEntity().getLocation();
         if (!regions.isEmpty()) {
             for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
                 Region r = ite.next();
-                System.out.println(r.getVectors());
-                System.out.println(r.getRegionArea());
                 if (r.getRegionArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
-                    System.out.println("affds");
                     r.onEntityExplodeEvent(event);
                     break;
                 }

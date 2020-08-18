@@ -71,6 +71,9 @@ public class Region {
     }
 
     public List<UUID> getMembers() {
+        if(members.isEmpty()){
+            members = configuration.getMembers();
+        }
         return members;
     }
 
@@ -79,6 +82,9 @@ public class Region {
     }
 
     public List<UUID> getOperators() {
+        if(operators.isEmpty()){
+            operators = configuration.getOperators();
+        }
         return operators;
     }
 
@@ -129,8 +135,8 @@ public class Region {
     public BoundingBox getRegionArea() {
         if (regionArea == null) {
             Vector min = configuration.getVectors().getMin();
-            Vector max = configuration.getVectors().getMin();
-            setRegionArea(new BoundingBox(min.getX(), min.getY(), min.getZ(), max.getX()+1, max.getY()+1, max.getZ()+1));
+            Vector max = configuration.getVectors().getMax();
+            regionArea = new BoundingBox(min.getX(), min.getY(), min.getZ(), max.getX()+1, max.getY()+1, max.getZ()+1);
         }
 
         return regionArea;

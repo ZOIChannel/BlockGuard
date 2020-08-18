@@ -62,7 +62,7 @@ public class Vectors implements ConfigurationSerializable {
             vectors.setMin( (Vector) args.get("min"));
         }
         if(args.containsKey("max")) {
-            vectors.setMin( (Vector) args.get("max"));
+            vectors.setMax( (Vector) args.get("max"));
         }
         if(args.containsKey("worldName")) {
             vectors.setWorldName( (String) args.get("worldName"));
