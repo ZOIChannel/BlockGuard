@@ -8,6 +8,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
@@ -163,4 +164,7 @@ public class Region {
 
     @EventHandler
     public void onBlockPhysicsEvent(BlockPhysicsEvent e) {}
+
+    @EventHandler
+    public void onEntitySpawnEvent(EntitySpawnEvent e){}
 }

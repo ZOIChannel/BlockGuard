@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 
 public class BlockGuardLogic extends Region implements Listener {
 
@@ -55,6 +56,14 @@ public class BlockGuardLogic extends Region implements Listener {
     public void onEntityExplodeEvent(EntityExplodeEvent e) {
         if (isWorking()) {
             if (!this.isFlag(RegionFlagType.EXPLODETNT)) e.setCancelled(true);
+        }
+    }
+
+    // モンスターのスポーン抑制
+    @EventHandler
+    public void onEntitySpawnEvent(EntitySpawnEvent e){
+        if(isWorking()){
+            if(!this.isFlag(RegionFlagType.INVADEMOB)) e.setCancelled(true);
         }
     }
 }

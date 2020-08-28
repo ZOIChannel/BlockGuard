@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 
 public class RegionManager implements Listener {
     private static final RegionManager singleton = new RegionManager();
@@ -121,6 +122,20 @@ public class RegionManager implements Listener {
                 Region r = ite.next();
                 if (r.getRegionArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
                     r.onBlockPhysicsEvent(event);
+                    break;
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onEntitySpawnEvent(EntitySpawnEvent event) {
+        Location loc = event.getLocation();
+        if (!regions.isEmpty()) {
+            for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
+                Region r = ite.next();
+                if (r.getRegionArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
+                    r.onEntitySpawnEvent(event);
                     break;
                 }
             }
