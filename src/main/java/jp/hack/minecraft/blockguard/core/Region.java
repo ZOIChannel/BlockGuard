@@ -3,11 +3,15 @@ package jp.hack.minecraft.blockguard.core;
 import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
@@ -24,6 +28,8 @@ public class Region {
     private Vectors vectors;
     private BoundingBox regionArea;
     private final RegionConfiguration configuration;
+    private BukkitRunnable CheckMonster;
+    private String WorldName;
 
     // flags
     public enum RegionFlagType {
@@ -47,6 +53,23 @@ public class Region {
         flags.put(RegionFlagType.EXPLODETNT, false);
         flags.put(RegionFlagType.SPREADLIQUID, false);
         flags.put(RegionFlagType.INVADEMOB, true);
+
+        CheckMonster = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!isWorking) return;
+                if(!isFlag(RegionFlagType.INVADEMOB)) return;
+                WorldName = getVectors().getWorldName();
+                List<LivingEntity> Entities = plugin.getServer().getWorld(WorldName).getLivingEntities();
+                for (LivingEntity entity : Entities) {
+                    if (entity instanceof Monster) {
+                        if (getRegionArea().contains(entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ())) entity.remove();
+                    }
+                }
+            }
+        };
+
+        CheckMonster.runTaskTimer(plugin, 0, 20);
     }
 
     //getter
@@ -71,7 +94,7 @@ public class Region {
     }
 
     public List<UUID> getMembers() {
-        if(members.isEmpty()){
+        if (members.isEmpty()) {
             members = configuration.getMembers();
         }
         return members;
@@ -82,7 +105,7 @@ public class Region {
     }
 
     public List<UUID> getOperators() {
-        if(operators.isEmpty()){
+        if (operators.isEmpty()) {
             operators = configuration.getOperators();
         }
         return operators;
@@ -100,27 +123,27 @@ public class Region {
         this.vectors = vectors;
     }
 
-    public void addMember(UUID uuid){
+    public void addMember(UUID uuid) {
         members.add(uuid);
     }
 
-    public void removeMember(UUID uuid){
+    public void removeMember(UUID uuid) {
         members.remove(uuid);
     }
 
-    public void isThereMember(UUID uuid){
+    public void isThereMember(UUID uuid) {
         members.contains(uuid);
     }
 
-    public void addOperator(UUID uuid){
+    public void addOperator(UUID uuid) {
         operators.add(uuid);
     }
 
-    public void removeOperator(UUID uuid){
+    public void removeOperator(UUID uuid) {
         operators.remove(uuid);
     }
 
-    public void isThereOperator(UUID uuid){
+    public void isThereOperator(UUID uuid) {
         operators.contains(uuid);
     }
 
@@ -136,7 +159,7 @@ public class Region {
         if (regionArea == null) {
             Vector min = configuration.getVectors().getMin();
             Vector max = configuration.getVectors().getMax();
-            regionArea = new BoundingBox(min.getX(), min.getY(), min.getZ(), max.getX()+1, max.getY()+1, max.getZ()+1);
+            regionArea = new BoundingBox(min.getX(), min.getY(), min.getZ(), max.getX() + 1, max.getY() + 1, max.getZ() + 1);
         }
 
         return regionArea;
@@ -153,14 +176,22 @@ public class Region {
     //setter
 
     @EventHandler
-    public void onBlockPlaceEvent(BlockPlaceEvent e) {}
+    public void onBlockPlaceEvent(BlockPlaceEvent e) {
+    }
 
     @EventHandler
-    public void onBlockBreakEvent(BlockBreakEvent e) {}
+    public void onBlockBreakEvent(BlockBreakEvent e) {
+    }
 
     @EventHandler
-    public void onEntityExplodeEvent(EntityExplodeEvent e) {}
+    public void onEntityExplodeEvent(EntityExplodeEvent e) {
+    }
 
     @EventHandler
-    public void onBlockPhysicsEvent(BlockPhysicsEvent e) {}
+    public void onBlockPhysicsEvent(BlockPhysicsEvent e) {
+    }
+
+    @EventHandler
+    public void onEntitySpawnEvent(EntitySpawnEvent e) {
+    }
 }
