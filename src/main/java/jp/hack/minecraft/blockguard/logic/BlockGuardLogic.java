@@ -2,26 +2,41 @@ package jp.hack.minecraft.blockguard.logic;
 
 import jp.hack.minecraft.blockguard.core.Region;
 import jp.hack.minecraft.blockguard.core.RegionPlugin;
-<<<<<<< HEAD
-import org.bukkit.Bukkit;
-=======
 import org.bukkit.Material;
->>>>>>> b80826af47b5d9fb5df49292dbe56713f9e26549
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityExplodeEvent;
-<<<<<<< HEAD
-import org.bukkit.scheduler.BukkitRunnable;
-=======
 import org.bukkit.event.entity.EntitySpawnEvent;
->>>>>>> b80826af47b5d9fb5df49292dbe56713f9e26549
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlockGuardLogic extends Region implements Listener {
+    private BukkitRunnable checkMonster;
 
     public BlockGuardLogic(RegionPlugin plugin, String id) {
         super(plugin, id);
+
+        checkMonster = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!isWorking()) return;
+                if(!isFlag(RegionFlagType.INVADEMOB)) return;
+                String worldName = getVectors().getWorldName();
+                List<LivingEntity> Entities = plugin.getServer().getWorld(worldName).getLivingEntities().stream().filter(v -> v instanceof Monster).collect(Collectors.toList());
+                for (LivingEntity entity : Entities) {
+                    if (getRegionArea().contains(entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ())) entity.remove();
+                }
+            }
+        };
+
+        checkMonster.runTaskTimer(plugin, 0, 20);
     }
 
     @EventHandler
@@ -52,14 +67,12 @@ public class BlockGuardLogic extends Region implements Listener {
     public void onBlockPhysicsEvent(BlockPhysicsEvent e) {
         if (isWorking()) {
             String blockName = e.getSourceBlock().getType().name();
-<<<<<<< HEAD
             if ((blockName.equals("WATER") || blockName.equals("LAVA")) && e.getBlock().breakNaturally()) {
-=======
-            if (e.getSourceBlock().isLiquid()) {
->>>>>>> b80826af47b5d9fb5df49292dbe56713f9e26549
-                if (!this.isFlag(RegionFlagType.SPREADLIQUID)) e.setCancelled(true);
-            } else if (blockName.equals("FIRE")) {
-                if (!this.isFlag(RegionFlagType.SPREADFIRE)) e.setCancelled(true);
+                if (e.getSourceBlock().isLiquid()) {
+                    if (!this.isFlag(RegionFlagType.SPREADLIQUID)) e.setCancelled(true);
+                } else if (blockName.equals("FIRE")) {
+                    if (!this.isFlag(RegionFlagType.SPREADFIRE)) e.setCancelled(true);
+                }
             }
         }
     }
