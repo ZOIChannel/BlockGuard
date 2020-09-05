@@ -7,6 +7,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -60,6 +61,7 @@ public class Region {
                 if (!isWorking) return;
                 if(!isFlag(RegionFlagType.INVADEMOB)) return;
                 // WorldName = getVectors().getWorldName();
+                if(WorldName == null) return;
                 List<LivingEntity> Entities = plugin
                         .getServer()
                         .getWorld(WorldName)
@@ -202,6 +204,10 @@ public class Region {
 
     @EventHandler
     public void onBlockPhysicsEvent(BlockPhysicsEvent e) {
+    }
+
+    @EventHandler
+    public void onBlockFromToEvent(BlockFromToEvent event){
     }
 
     @EventHandler

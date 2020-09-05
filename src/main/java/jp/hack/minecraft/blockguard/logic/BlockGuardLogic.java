@@ -44,11 +44,22 @@ public class BlockGuardLogic extends Region implements Listener {
     public void onBlockPhysicsEvent(BlockPhysicsEvent e) {
         if (isWorking()) {
             String blockName = e.getSourceBlock().getType().name();
-            if (e.getSourceBlock().isLiquid() && e.getBlock().breakNaturally()) {
-                if (!this.isFlag(RegionFlagType.SPREADLIQUID)) e.setCancelled(true);
-            } else if (blockName.equals("FIRE")) {
+            // if (e.getSourceBlock().isLiquid() && e.getBlock().breakNaturally()) {
+            // if (!this.isFlag(RegionFlagType.SPREADLIQUID));
+            //  e.setCancelled(true);
+
+            // } else
+            if (blockName.equals("FIRE")) {
                 if (!this.isFlag(RegionFlagType.SPREADFIRE)) e.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onBlockFromToEvent(BlockFromToEvent e) {
+        if (isWorking()) {
+            if (!this.isFlag(RegionFlagType.SPREADLIQUID)) e.setCancelled(true);
+            System.out.println("onBlockFromToEvent:" + e.getBlock());
         }
     }
 
@@ -61,9 +72,9 @@ public class BlockGuardLogic extends Region implements Listener {
 
     // モンスターのスポーン抑制
     @EventHandler
-    public void onEntitySpawnEvent(EntitySpawnEvent e){
-        if(isWorking()){
-            if(!this.isFlag(RegionFlagType.INVADEMOB)) e.setCancelled(true);
+    public void onEntitySpawnEvent(EntitySpawnEvent e) {
+        if (isWorking()) {
+            if (!this.isFlag(RegionFlagType.INVADEMOB)) e.setCancelled(true);
         }
     }
 }

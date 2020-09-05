@@ -8,6 +8,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import java.io.File;
 import java.util.*;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -122,6 +123,20 @@ public class RegionManager implements Listener {
                 Region r = ite.next();
                 if (r.getRegionArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
                     r.onBlockPhysicsEvent(event);
+                    break;
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBlockFromToEvent(BlockFromToEvent event){
+        Location loc = event.getBlock().getLocation();
+        if (!regions.isEmpty()) {
+            for (Iterator<Region> ite = regions.values().iterator(); ite.hasNext(); ) {
+                Region r = ite.next();
+                if (r.getRegionArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
+                    r.onBlockFromToEvent(event);
                     break;
                 }
             }
