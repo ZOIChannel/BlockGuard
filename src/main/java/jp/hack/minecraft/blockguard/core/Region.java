@@ -59,8 +59,11 @@ public class Region {
             public void run() {
                 if (!isWorking) return;
                 if(!isFlag(RegionFlagType.INVADEMOB)) return;
-                WorldName = getVectors().getWorldName();
-                List<LivingEntity> Entities = plugin.getServer().getWorld(WorldName).getLivingEntities();
+                // WorldName = getVectors().getWorldName();
+                List<LivingEntity> Entities = plugin
+                        .getServer()
+                        .getWorld(WorldName)
+                        .getLivingEntities();
                 for (LivingEntity entity : Entities) {
                     if (entity instanceof Monster) {
                         if (getRegionArea().contains(entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ())) entity.remove();
@@ -71,6 +74,16 @@ public class Region {
 
         CheckMonster.runTaskTimer(plugin, 0, 20);
     }
+
+
+    public String getWorldName() {
+        return WorldName;
+    }
+
+    public void setWorldName(String worldName) {
+        WorldName = worldName;
+    }
+
 
     //getter
     public RegionPlugin getPlugin() {
