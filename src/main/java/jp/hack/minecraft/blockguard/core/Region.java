@@ -1,10 +1,6 @@
 package jp.hack.minecraft.blockguard.core;
 
 import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
@@ -17,7 +13,6 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Region {
     //メンバ変数
@@ -29,8 +24,6 @@ public class Region {
     private Vectors vectors;
     private BoundingBox regionArea;
     private final RegionConfiguration configuration;
-    private BukkitRunnable CheckMonster;
-    private String WorldName;
 
     // flags
     public enum RegionFlagType {
@@ -54,6 +47,8 @@ public class Region {
         flags.put(RegionFlagType.EXPLODETNT, false);
         flags.put(RegionFlagType.SPREADLIQUID, false);
         flags.put(RegionFlagType.INVADEMOB, true);
+<<<<<<< HEAD
+=======
 
         CheckMonster = new BukkitRunnable() {
             @Override
@@ -75,6 +70,7 @@ public class Region {
         };
 
         CheckMonster.runTaskTimer(plugin, 0, 20);
+>>>>>>> d425b452912969e376f8458d85d6293a0fd490ad
     }
 
 
@@ -131,6 +127,9 @@ public class Region {
     }
 
     public Vectors getVectors() {
+        if (vectors == null) {
+            vectors = configuration.getVectors();
+        }
         return vectors;
     }
 
