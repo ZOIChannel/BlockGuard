@@ -48,6 +48,7 @@ public class CreateSubCommand extends WorldEditorUtil implements SubCommand {
         }
 
         Region region = RegionManager.getInstance().createRegion(plugin, id, vectors);
+        region.setWorldName(player.getWorld().getName());
         region.setVectors(vectors);
         region.addOperator(player.getUniqueId());
 

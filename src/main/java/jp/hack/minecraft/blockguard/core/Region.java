@@ -3,6 +3,7 @@ package jp.hack.minecraft.blockguard.core;
 import jp.hack.minecraft.blockguard.utils.RegionConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -46,7 +47,41 @@ public class Region {
         flags.put(RegionFlagType.EXPLODETNT, false);
         flags.put(RegionFlagType.SPREADLIQUID, false);
         flags.put(RegionFlagType.INVADEMOB, true);
+<<<<<<< HEAD
+=======
+
+        CheckMonster = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!isWorking) return;
+                if(!isFlag(RegionFlagType.INVADEMOB)) return;
+                // WorldName = getVectors().getWorldName();
+                if(WorldName == null) return;
+                List<LivingEntity> Entities = plugin
+                        .getServer()
+                        .getWorld(WorldName)
+                        .getLivingEntities();
+                for (LivingEntity entity : Entities) {
+                    if (entity instanceof Monster) {
+                        if (getRegionArea().contains(entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ())) entity.remove();
+                    }
+                }
+            }
+        };
+
+        CheckMonster.runTaskTimer(plugin, 0, 20);
+>>>>>>> d425b452912969e376f8458d85d6293a0fd490ad
     }
+
+
+    public String getWorldName() {
+        return WorldName;
+    }
+
+    public void setWorldName(String worldName) {
+        WorldName = worldName;
+    }
+
 
     //getter
     public RegionPlugin getPlugin() {
@@ -168,6 +203,10 @@ public class Region {
 
     @EventHandler
     public void onBlockPhysicsEvent(BlockPhysicsEvent e) {
+    }
+
+    @EventHandler
+    public void onBlockFromToEvent(BlockFromToEvent event){
     }
 
     @EventHandler
